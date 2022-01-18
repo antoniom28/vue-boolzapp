@@ -91,12 +91,34 @@ var app = new Vue(
         data: {
             contacts : allContacts,
             chat : allContacts[0],
+            inputText : null,
         },
         methods: {
             openChat : function(elemento){
                 console.log(elemento.name);
                 this.chat = elemento;
-            }
+            },
+            writeMessage : function(elemento){
+                console.log(this.inputText);
+                let newMessage = {
+                    date: '10/01/2020 15:50:00',
+                    text: this.inputText,
+                    status: 'sent'
+                };
+                elemento.messages.push(newMessage);
+                this.inputText = "";
+                this.reply(elemento);
+            },
+            reply : function(elemento){
+                    setTimeout(() => {
+                        let newMessage = {
+                            date: '10/01/2020 15:50:00',
+                            text: 'ok',
+                            status: 'received'
+                        };
+                        elemento.messages.push(newMessage);
+                    }, 1500);
+            },
         }
     }
 );
