@@ -39,7 +39,7 @@
             </div>
 
             <div id="all-chat">
-                <div v-for="(elemento,index) in contacts" class="contacts">
+                <div v-for="(elemento,index) in contacts" @click="openChat(elemento)" class="contacts">
                     <div class="chat-contact">
                         <div class="profile-picture-contact">
                             <img :src="'img/avatar/avatar'+elemento.avatar+'.jpg'" alt="">
@@ -51,22 +51,34 @@
                     </div>
                     <hr>
                 </div>
-
-                
             </div>
         </div> <!-- CONTACTS -->
 
         <div id="your-chat">
             <div id="chat-name">
-                
+                    <div class="profile-contact">
+                        <div class="profile-picture-contact">
+                            <img :src="'img/avatar/avatar'+chat.avatar+'.jpg'" alt="">
+                        </div>
+                        <p>{{chat.name}}</p>
+                    </div>
+                    <div class="icons">
+                        <i class="fas fa-search"></i>
+                        <i class="fas fa-ellipsis-v"></i>
+                    </div>
             </div>
 
             <div id="chat">
-                
+                <div v-for="message in chat.messages" class="mess" :class="message.status">
+                        {{message.text}}
+                </div> 
             </div>
 
             <div id="chat-input">
-                
+                <i class="far fa-laugh"></i>
+                <i class="fas fa-paperclip"></i>
+                <input class="type-message" type="text" placeholder="Type a message">
+                <i class="fas fa-microphone"></i>
             </div>
         </div>
     </div> <!-- ROOT -->

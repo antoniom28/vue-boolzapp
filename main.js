@@ -84,12 +84,19 @@ let allContacts = [
     },
 ]
 
+
 var app = new Vue(
     {
         el: "#root",
         data: {
             contacts : allContacts,
+            chat : allContacts[0],
         },
-        methods: {}
+        methods: {
+            openChat : function(elemento){
+                console.log(elemento.name);
+                this.chat = elemento;
+            }
+        }
     }
 );
