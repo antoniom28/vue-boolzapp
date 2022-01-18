@@ -34,19 +34,19 @@
             <div id="search-chat">
                 <div class="search">
                     <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Search or start new chat">
+                    <input v-model="searchBar" @keyup="searchContact()" type="text" placeholder="Search or start new chat">
                 </div>
             </div>
 
             <div id="all-chat">
-                <div v-for="(elemento,index) in contacts" @click="openChat(elemento)" class="contacts">
-                    <div class="chat-contact">
+                <div v-if="elemento.visible" v-for="(elemento,index) in contacts" @click="openChat(elemento)" class="contacts">
+                    <div  class="chat-contact">
                         <div class="profile-picture-contact">
                             <img :src="'img/avatar/avatar'+elemento.avatar+'.jpg'" alt="">
                         </div>
                         <div class="contact-name">
                             <p>{{elemento.name}}</p>
-                            <span>{{elemento.messages[elemento.messages.length - 1].text}}</span>
+                            <span v-if="elemento.messages.length > 0">{{elemento.messages[elemento.messages.length - 1].text}}</span>
                         </div>
                     </div>
                     <hr>
@@ -69,8 +69,17 @@
             </div>
 
             <div id="chat">
-                <div v-for="message in chat.messages" class="mess" :class="message.status">
-                       {{message.text}}
+                <div @mouseenter="showMessageMenu(index,true)" @mouseleave="showMessageMenu(index,false)" v-for="(message,index) in chat.messages">
+                        <div v-if="chat.messages.length > 0" class="mess" :class="message.status">
+                            {{message.text}}
+                            <div class="message-menu">
+                            <span class="message-info">Message Info</span>
+                            <span @click="deleteMessage(message,index)" class="delete-message">Delete message</span>
+                            </div>
+                            <span @click="messageMenu(index)" class="message-button">
+                                <i class="fas fa-angle-down"></i>
+                            </span>
+                        </div>
                 </div> 
             </div>
 
@@ -88,10 +97,3 @@
 </body>
 
 </html>
-
-<!--
-Replica della grafica con la possibilità di avere messaggi scritti dall’utente (verdi) e
-dall’interlocutore (bianco) assegnando due classi CSS diverse
-Visualizzazione dinamica della lista contatti: tramite la direttiva v-for, visualizzare
-nome e immagine di ogni contatto
--->

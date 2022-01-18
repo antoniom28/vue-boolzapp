@@ -235,7 +235,34 @@ hr{
     margin: 2px calc(8% + -5px);
     color: black;
     position: relative;
-    z-index: 30;
+}
+
+#chat .message-button{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 5px;
+    display: none;
+}
+
+#chat .message-menu{
+    position: absolute;
+    top: 20px;
+    right: 0;
+    width: 140px;
+    min-height: 80px;
+    background-color: white;
+    margin-right: 5px;
+    display: none;
+    z-index: 3;
+    color : gray;
+    text-align: center;
+    padding: 10px 0px;
+}
+
+#chat .message-menu span{
+    cursor: pointer;
+    margin : 10px 0px;
 }
 
 #chat .mess.sent{

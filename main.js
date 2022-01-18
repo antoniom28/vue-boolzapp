@@ -70,17 +70,7 @@ let allContacts = [
         avatar: '_4',
         visible: true,
         messages: [
-            {
-                date: '10/01/2020 15:30:55',
-                text: 'Lo sai che ha aperto una nuova pizzeria?',
-                status: 'sent'
-            },
-            {
-                date: '10/01/2020 15:50:00',
-                text: 'Si, ma preferirei andare al cinema',
-                status: 'received'
-            }
-        ],
+        ], //test su nuova chat
     },
 ]
 
@@ -92,6 +82,7 @@ var app = new Vue(
             contacts : allContacts,
             chat : allContacts[0],
             inputText : null,
+            searchBar : null,
         },
         methods: {
             openChat : function(elemento){
@@ -119,6 +110,46 @@ var app = new Vue(
                         elemento.messages.push(newMessage);
                     }, 1500);
             },
+            searchContact : function(){
+                let searchTemp = this.searchBar.toLowerCase();
+                searchTemp = searchTemp.replace(/\s/g, '');
+
+                for(let i=0; i<this.contacts.length; i++)
+                    this.contacts[i].visible = true;
+                
+                if(this.searchBar != null && this.searchBar != "" )
+                    for(let i=0; i<this.contacts.length; i++)
+                        if(!(this.contacts[i].name.toLowerCase()).includes(searchTemp))
+                            this.contacts[i].visible = false;
+            },
+            showMessageMenu : function(index,hover){
+                let menu = document.getElementsByClassName('message-button');
+                if(hover)
+                    menu[index].style.display ="block";
+                else
+                    menu[index].style.display ="none";
+            },
+            messageMenu : function(index){
+                let menu = document.getElementsByClassName('message-menu');
+                    if(menu[index].style.display == "block")
+                        menu[index].style.display ="none";
+                    else
+                        menu[index].style.display ="block";
+            },
+            deleteMessage : function(mess,index){
+                let boh;
+                for(let i=0; i<this.contacts.length; i++){
+                    boh = this.contacts[i].messages.indexOf(mess);
+                    if(boh != -1){
+                        boh = i;
+                        break;
+                    }
+                }
+                console.log(BroadcastChannel);
+                console.log(mess,index);
+                this.contacts[boh].messages.splice(index,1);
+                this.messageMenu(index);
+            }
         }
     }
 );
