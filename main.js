@@ -109,6 +109,7 @@ var app = new Vue(
         },
         methods: { //AL CLICK APRE LA CHAT CORRISPONDENTE
             openChat: function (elemento) {
+                this.info = false;
                 this.chat = elemento;
                 for (let i = 0; i < this.contacts.length; i++)
                     this.contacts[i].chatOpen = false;
@@ -251,6 +252,7 @@ var app = new Vue(
 
             },
             resize : function(){
+                this.info = false;
                 if(window.innerHeight > document.documentElement.clientHeight){
                     const scrollBar = window.innerHeight - document.documentElement.clientHeight;
                     document.getElementById('root').style.height = `calc(100vh - ${scrollBar + 1}px)`;
