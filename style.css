@@ -197,7 +197,6 @@ hr {
 }
 
 #show-info-box{
-    float: right;
     border-left: 1px solid #c1c1c1;
     display: flex;
     flex-direction: column;
@@ -205,7 +204,6 @@ hr {
     height: 100%;
     position: relative;
     background-color: #e5ddd5;
-    transition: all 0.5s;
 }
 
 #chat-name {

@@ -197,12 +197,12 @@ var app = new Vue(
                         setTimeout(() => {
                             mainChatWidth = document.getElementById('your-chat').clientWidth;
                             document.getElementById('show-info-box').style.left = `-${mainChatWidth + 1}px`;
-                        }, 100);
+                        }, 10);
                     }
                     this.infoMessage.text = mess.text;
                     this.infoMessage.date = mess.date;
                     this.infoMessage.status = mess.status;
-                }, 100);
+                }, 10);
             },
             switchInfo : function(){
                 this.info = !this.info;
