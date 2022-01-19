@@ -100,6 +100,12 @@ var app = new Vue(
             inputText: null,
             searchBar: null,
             dateToday: dayjs(),
+            info : false,
+            infoMessage : {
+                text : "cia",
+                date : "data",
+                status: 'sent',
+            },
         },
         methods: { //AL CLICK APRE LA CHAT CORRISPONDENTE
             openChat: function (elemento) {
@@ -177,6 +183,29 @@ var app = new Vue(
                     }, 0); //aggiungle la classe dopo l'add event a 179js
                 }
             },
+            showInfo : function(mess){
+                this.switchInfo();
+                const maxW = document.documentElement.clientWidth;
+                let mainChatWidth = document.getElementById('your-chat').clientWidth;
+                console.log(mainChatWidth);
+                setTimeout(() => {
+                    if(maxW <= 992){
+                        console.log(maxW,document.getElementById('show-info-box'));
+                        document.getElementById('show-info-box').style.left = `${maxW/2 - 100}px`;
+                        document.getElementById('show-info-box').style.flex = `1 0 ${mainChatWidth}px`;
+                        setTimeout(() => {
+                            mainChatWidth = document.getElementById('your-chat').clientWidth;
+                            document.getElementById('show-info-box').style.left = `-${mainChatWidth + 1}px`;
+                        }, 100);
+                    }
+                    this.infoMessage.text = mess.text;
+                    this.infoMessage.date = mess.date;
+                    this.infoMessage.status = mess.status;
+                }, 100);
+            },
+            switchInfo : function(){
+                this.info = !this.info;
+            },
             deleteMessage: function (mess, index) {
                 //PERMETTE DI CANCELLARE IL MESSAGGIO AL CLICK
                 let deleteTheMessage;
@@ -221,6 +250,13 @@ var app = new Vue(
                 }
 
             },
+            resize : function(){
+                if(window.innerHeight > document.documentElement.clientHeight){
+                    const scrollBar = window.innerHeight - document.documentElement.clientHeight;
+                    document.getElementById('root').style.height = `calc(100vh - ${scrollBar + 1}px)`;
+                } else
+                    document.getElementById('root').style.height = `100vh`;
+            }
         },
         updated: function () {
             //rimuove il menu al cambio chat, 
@@ -244,7 +280,8 @@ var app = new Vue(
             });
         },
         created: function () {
-            
+            window.addEventListener('load',this.resize);
+            window.addEventListener('resize',this.resize);
             this.dateFormat();
         }
     }

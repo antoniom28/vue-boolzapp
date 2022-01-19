@@ -33,7 +33,6 @@ i {
     min-width: 300px;
     height: 100%;
     background-color: skyblue;
-    border-right: 1px solid #c1c1c1;
     cursor: pointer;
 }
 
@@ -188,14 +187,29 @@ hr {
 
 #your-chat {
     float: right;
-    /* display: inline-block; */
+    border-left: 1px solid #c1c1c1;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     height: 100%;
+    position: relative;
     background-color: #e5ddd5;
 }
 
+#show-info-box{
+    float: right;
+    border-left: 1px solid #c1c1c1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: #e5ddd5;
+    transition: all 0.5s;
+}
+
 #chat-name {
-    /* display: inline-block; */
+    z-index: 333;
     width: 100%;
     height: 9%;
     background-color: #ededed;
@@ -236,17 +250,23 @@ hr {
     background-image: url(img/sfondo.png);
     filter: brightness(0.7) opacity(0.4);
     width: 100%;
-    position: fixed;
-    height: 82%;
+    position: absolute;
+    height: 100%;
 }
 
-#chat {
+#chat{
     /* display: inline-block; */
     width: 100%;
     height: 82%;
     overflow: auto;
     position: relative;
+}
 
+.info-message {
+    /* display: inline-block; */
+    width: 100%;
+    overflow: auto;
+    position: relative;
 }
 
 #chat .time {
@@ -256,7 +276,7 @@ hr {
     font-size: 10px;
 }
 
-#chat .mess {
+.mess {
     background-color: red;
     min-width: 40px;
     min-height: 30px;
@@ -272,14 +292,14 @@ hr {
     padding-right: 50px;
 }
 
-#chat .mess.sent {
+.mess.sent {
     background-color: rgb(198 235 198);
     float: right;
     margin-left: 40px;
     clear: both;
 }
 
-#chat .mess.received {
+.mess.received {
     background-color: white;
     float: left;
     margin-right: 40px;
@@ -342,12 +362,38 @@ hr {
 }
 
 #chat-input {
-    /* display: inline-block; */
     display: flex;
+    z-index: 333;
     align-items: center;
     width: 100%;
     height: 9%;
     background-color: #ededed;
+}
+
+.info-time{
+    width: 100%;
+    background-color: #ededed;
+    flex: 1 0 auto;
+    z-index: 333;
+}
+
+.info-time-box{
+    background-color: white;
+    padding: 30px 0px 10px 50px;
+}
+
+.info-box{
+    justify-content: flex-start!important;
+}
+
+.info-box > *{
+   margin: 0 30px;
+   color: rgb(100, 100, 100);
+}
+
+.margin-info{
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 #chat-input>* {

@@ -85,7 +85,7 @@
                             {{message.date.$H}}:{{message.date.$m}}
                         </span>
                         <div :class="message.status" class="message-menu">
-                            <span @click="" class="message-info">Message Info</span>
+                            <span @click="showInfo(message)" class="message-info">Message Info</span>
                             <span @click="deleteMessage(message,index)" class="delete-message">Delete message</span>
                         </div>
                         <span @click="messageMenu(index)" class="message-button">
@@ -102,6 +102,26 @@
                 <i class="fas fa-microphone"></i>
             </div>
         </div>
+
+        <div v-if="info" id="show-info-box">
+            <div id="chat-name" class="info-box">
+                <i @click="switchInfo()" class="fas fa-times"></i>
+                <p>Message Info</p>
+            </div>
+            <div class="filter-background"></div>
+            <div class="info-message">
+                <div :class="infoMessage.status" class="mess margin-info">
+                    {{infoMessage.text}}
+                </div>
+            </div>
+            <div class="info-time">
+                <div class="info-time-box">
+                    <p>Delivered</p>
+                <span>{{infoMessage.date}}</span>
+                </div>
+            </div>
+        </div>
+
     </div> <!-- ROOT -->
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://unpkg.com/dayjs@1.8.20/dayjs.min.js"></script>
