@@ -12,6 +12,31 @@ img {
     transform: translate(-50%, -50%);
 }
 
+.image-sent{
+    position: static;
+    transform: none;
+    max-width:300px;
+}
+
+#input-image{
+    width: 20px;
+    flex: none;
+    position: relative;
+}
+input#input-image::after {
+    content: "\f0c6";
+    font-family: fontAwesome;
+    width: 50px;
+    height: 50px;
+    background-color: #ededed;
+    position: absolute;
+    top: 0;
+    color: grey;
+    font-size: 1.5em;
+    cursor: pointer;
+    left: 0;
+}
+
 span {
     font-size: 0.8em;
     display: inline-block;
@@ -73,7 +98,7 @@ i {
 }
 
 .icons {
-    filter: contrast(0.3);
+    color: gray;
     margin-right: 30px;
     width: 35%;
     display: flex;
@@ -350,8 +375,8 @@ hr {
     margin-right: 5px;
     display: none;
     background-color: inherit;
-    height: 100%;
-    width: 30px;
+    opacity: 0.9;
+    font-size: 1.2em;
     color: gray;
     justify-content: center;
     align-items: center;

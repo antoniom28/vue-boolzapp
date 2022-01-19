@@ -82,7 +82,10 @@
                 <div @mouseenter="showMessageMenu(index,true)" @mouseleave="showMessageMenu(index,false)"
                     v-for="(message,index) in chat.messages">
                     <div v-if="chat.messages.length > 0" class="mess" :class="message.status">
-                        {{message.text}}
+                        <div>
+                            {{message.text}}
+                            <img v-if="message.image != null" class="image-sent" :src="message.image" alt="">
+                        </div>
                         <span class="time">
                             {{message.date.$H}}:{{message.date.$m}}
                         </span>
@@ -98,7 +101,7 @@
             </div>
             <div id="chat-input">
                 <i class="far fa-laugh"></i>
-                <i class="fas fa-paperclip"></i>
+                <input @change ="sendImage(chat)" type="file" name="" id="input-image">
                 <input v-model="inputText" @keyup.enter="writeMessage(chat)" class="type-message" type="text"
                     placeholder="Type a message">
                 <i class="fas fa-microphone"></i>
@@ -114,6 +117,7 @@
             <div class="info-message">
                 <div :class="infoMessage.status" class="mess margin-info">
                     {{infoMessage.text}}
+                    <img v-if="infoMessage.image != null" class="image-sent" :src="infoMessage.image" alt="">
                 </div>
             </div>
             <div class="info-time">

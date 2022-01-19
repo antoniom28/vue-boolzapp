@@ -66,7 +66,7 @@ let allContacts = [
             },
             {
                 date: '07/01/2022 16:15:22',
-                text: 'Ah scusa!',
+                text: ' Ah scusa! ',
                 status: 'received'
             }
         ],
@@ -100,11 +100,13 @@ var app = new Vue(
             inputText: null,
             searchBar: null,
             dateToday: dayjs(),
-            info : false,
-            infoMessage : {
-                text : "cia",
-                date : "data",
+            info: false,
+            inputImage : null,
+            infoMessage: {
+                text: "cia",
+                date: "data",
                 status: 'sent',
+                image : null,
             },
         },
         methods: { //AL CLICK APRE LA CHAT CORRISPONDENTE
@@ -122,7 +124,7 @@ var app = new Vue(
                     let newMessage = {
                         date: this.dateToday.format('DD-MM-YYYY:HH-mm'),
                         text: this.inputText,
-                        status: 'sent'
+                        status: 'sent',
                     };
                     elemento.messages.push(newMessage);
                     this.dateFormat();
@@ -130,10 +132,32 @@ var app = new Vue(
                     this.reply(elemento);
                 }
             },
+            //volevo fare in modo che capisse che file gli
+            //arrivasse ma, sono cose che credo faremo
+            //quindi ho lasciato solo l'imm 
+            sendImage: function (elemento) {
+                console.log('entrato in send');
+                let input = document.getElementById("input-image");
+                let fReader = new FileReader();
+                fReader.readAsDataURL(input.files[0]);
+                console.log(input.files[0]);
+                fReader.onloadend = function (event) {
+                    let newMessage = {
+                        date: app.$data.dateToday.format('DD-MM-YYYY:HH-mm'),
+                        text: this.inputText,
+                        status: 'sent',
+                        image: event.target.result,
+                    };
+                    elemento.messages.push(newMessage);
+                    app.dateFormat();
+                    app.reply(elemento);
+                    input.value = null;
+                }
+            },
             reply: function (elemento) {
                 //LA RISPOSTA AUTOMATICA DEL BOT
                 setTimeout(() => {
-                    document.querySelector('.typing').style.display ="block";
+                    document.querySelector('.typing').style.display = "block";
                 }, 500);
                 setTimeout(() => {
                     let newMessage = {
@@ -143,7 +167,7 @@ var app = new Vue(
                     };
                     elemento.messages.push(newMessage);
                     this.dateFormat();
-                    document.querySelector('.typing').style.display ="none";
+                    document.querySelector('.typing').style.display = "none";
                 }, 1500);
             },
             searchContact: function () {
@@ -188,15 +212,15 @@ var app = new Vue(
                     }, 0); //aggiungle la classe dopo l'add event a 179js
                 }
             },
-            showInfo : function(mess){
+            showInfo: function (mess) {
                 this.switchInfo();
                 const maxW = document.documentElement.clientWidth;
                 let mainChatWidth = document.getElementById('your-chat').clientWidth;
                 console.log(mainChatWidth);
                 setTimeout(() => {
-                    if(maxW <= 992){
-                        console.log(maxW,document.getElementById('show-info-box'));
-                        document.getElementById('show-info-box').style.left = `${maxW/2 - 100}px`;
+                    if (maxW <= 992) {
+                        console.log(maxW, document.getElementById('show-info-box'));
+                        document.getElementById('show-info-box').style.left = `${maxW / 2 - 100}px`;
                         document.getElementById('show-info-box').style.flex = `1 0 ${mainChatWidth}px`;
                         setTimeout(() => {
                             mainChatWidth = document.getElementById('your-chat').clientWidth;
@@ -206,9 +230,10 @@ var app = new Vue(
                     this.infoMessage.text = mess.text;
                     this.infoMessage.date = mess.date;
                     this.infoMessage.status = mess.status;
+                    this.infoMessage.image = mess.image;
                 }, 10);
             },
-            switchInfo : function(){
+            switchInfo: function () {
                 this.info = !this.info;
             },
             deleteMessage: function (mess, index) {
@@ -255,9 +280,9 @@ var app = new Vue(
                 }
 
             },
-            resize : function(){
+            resize: function () {
                 this.info = false;
-                if(window.innerHeight > document.documentElement.clientHeight){
+                if (window.innerHeight > document.documentElement.clientHeight) {
                     const scrollBar = window.innerHeight - document.documentElement.clientHeight;
                     document.getElementById('root').style.height = `calc(100vh - ${scrollBar + 1}px)`;
                 } else
@@ -270,8 +295,10 @@ var app = new Vue(
             //del menu sul messaggio, rimaneva anche in un
             //messaggio a caso su un'altra chat
             let menu = document.getElementsByClassName('message-menu');
-            for (let i = 0; i < menu.length; i++)
+            for (let i = 0; i < menu.length; i++){
                 menu[i].style.display = "none";
+                menu[i].classList.remove('visible');
+            }
         },
         beforeCreate: function () {
             //evento click globale, toglie tutti i pannelli
@@ -286,8 +313,8 @@ var app = new Vue(
             });
         },
         created: function () {
-            window.addEventListener('load',this.resize);
-            window.addEventListener('resize',this.resize);
+            window.addEventListener('load', this.resize);
+            window.addEventListener('resize', this.resize);
             this.dateFormat();
         }
     }
