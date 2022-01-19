@@ -34,20 +34,27 @@
             <div id="search-chat">
                 <div class="search">
                     <i class="fas fa-search"></i>
-                    <input v-model="searchBar" @keyup="searchContact()" type="text" placeholder="Search or start new chat">
+                    <input v-model="searchBar" @keyup="searchContact()" type="text"
+                        placeholder="Search or start new chat">
                 </div>
             </div>
 
             <div id="all-chat">
-                <div v-if="elemento.visible" v-for="(elemento,index) in contacts" @click="openChat(elemento)" class="contacts">
-                    <div  class="chat-contact">
-                        <div class="profile-picture-contact">
-                            <img :src="'img/avatar/avatar'+elemento.avatar+'.jpg'" alt="">
+                <div v-if="elemento.visible" v-for="(elemento,index) in contacts" @click="openChat(elemento)"
+                    class="contacts">
+                    <div :class="{'focus-contact': elemento.chatOpen}" class="chat-contact">
+                        <div id="contact-box">
+                            <div class="profile-picture-contact">
+                                <img :src="'img/avatar/avatar'+elemento.avatar+'.jpg'" alt="">
+                            </div>
+                            <div class="contact-name">
+                                <p>{{elemento.name}}</p>
+                                <span v-if="elemento.messages.length > 0">{{elemento.messages[elemento.messages.length -
+                                    1].text}}</span>
+                            </div>
                         </div>
-                        <div class="contact-name">
-                            <p>{{elemento.name}}</p>
-                            <span v-if="elemento.messages.length > 0">{{elemento.messages[elemento.messages.length - 1].text}}</span>
-                        </div>
+                        <p class="time" v-if="elemento.messages.length > 0">{{elemento.lastMessage}}
+                        </p>
                     </div>
                     <hr>
                 </div>
@@ -56,41 +63,51 @@
 
         <div id="your-chat">
             <div id="chat-name">
-                    <div class="profile-contact">
-                        <div class="profile-picture-contact">
-                            <img :src="'img/avatar/avatar'+chat.avatar+'.jpg'" alt="">
-                        </div>
-                        <p>{{chat.name}}</p>
+                <div class="profile-contact">
+                    <div class="profile-picture-contact">
+                        <img :src="'img/avatar/avatar'+chat.avatar+'.jpg'" alt="">
                     </div>
-                    <div class="icons">
-                        <i class="fas fa-search"></i>
-                        <i class="fas fa-ellipsis-v"></i>
-                    </div>
+                    <p>{{chat.name}}</p>
+                </div>
+                <div class="icons">
+                    <i class="fas fa-search"></i>
+                    <i class="fas fa-ellipsis-v"></i>
+                </div>
             </div>
 
+            <div class="filter-background"></div>
             <div id="chat">
-                <div @mouseenter="showMessageMenu(index,true)" @mouseleave="showMessageMenu(index,false)" v-for="(message,index) in chat.messages">
-                        <div v-if="chat.messages.length > 0" class="mess" :class="message.status">
-                            {{message.text}}
-                            <div class="message-menu">
-                            <span class="message-info">Message Info</span>
+                <div @mouseenter="showMessageMenu(index,true)" @mouseleave="showMessageMenu(index,false)"
+                    v-for="(message,index) in chat.messages">
+                    <div v-if="chat.messages.length > 0" class="mess" :class="message.status">
+                        {{message.text}}
+                        <span class="time">
+                            {{message.date.$H}}:{{message.date.$m}}
+                        </span>
+                        <div :class="message.status" class="message-menu">
+                            <span @click="" class="message-info">Message Info</span>
                             <span @click="deleteMessage(message,index)" class="delete-message">Delete message</span>
-                            </div>
-                            <span @click="messageMenu(index)" class="message-button">
-                                <i class="fas fa-angle-down"></i>
-                            </span>
                         </div>
-                </div> 
+                        <span @click="messageMenu(index)" class="message-button">
+                            <i class="fas fa-angle-down"></i>
+                        </span>
+                    </div>
+                </div>
             </div>
-
             <div id="chat-input">
                 <i class="far fa-laugh"></i>
                 <i class="fas fa-paperclip"></i>
-                <input v-model="inputText" @keyup.enter="writeMessage(chat)" class="type-message" type="text" placeholder="Type a message">
+                <input v-model="inputText" @keyup.enter="writeMessage(chat)" class="type-message" type="text"
+                    placeholder="Type a message">
                 <i class="fas fa-microphone"></i>
             </div>
         </div>
     </div> <!-- ROOT -->
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://unpkg.com/dayjs@1.8.20/dayjs.min.js"></script>
+    <script src="https://unpkg.com/dayjs@1.8.21/locale/zh-cn.js"></script>
+    <script>dayjs.locale('zh-cn')</script>
+    <script src="https://unpkg.com/dayjs@1.8.20/plugin/customParseFormat.js"></script>
     <script src="https://kit.fontawesome.com/8f1b5398cd.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="main.js"></script>

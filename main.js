@@ -3,6 +3,8 @@ let allContacts = [
         name: 'Michele',
         avatar: '_1',
         visible: true,
+        chatOpen: false,
+        lastMessage: null,
         messages: [
             {
                 date: '10/01/2020 15:30:55',
@@ -15,7 +17,7 @@ let allContacts = [
                 status: 'sent'
             },
             {
-                date: '10/01/2020 16:15:22',
+                date: '17/01/2020 16:15:22',
                 text: 'Tutto fatto!',
                 status: 'received'
             }
@@ -25,6 +27,8 @@ let allContacts = [
         name: 'Fabio',
         avatar: '_2',
         visible: true,
+        chatOpen: false,
+        lastMessage: null,
         messages: [
             {
                 date: '20/03/2020 16:30:00',
@@ -37,7 +41,7 @@ let allContacts = [
                 status: 'received'
             },
             {
-                date: '20/03/2020 16:35:00',
+                date: '19/01/2022 16:42:00',
                 text: 'Mi piacerebbe ma devo andare a fare la spesa.',
                 status: 'sent'
             }
@@ -47,6 +51,8 @@ let allContacts = [
         name: 'Samuele',
         avatar: '_3',
         visible: true,
+        chatOpen: false,
+        lastMessage: null,
         messages: [
             {
                 date: '28/03/2020 10:10:40',
@@ -59,7 +65,7 @@ let allContacts = [
                 status: 'sent'
             },
             {
-                date: '28/03/2020 16:15:22',
+                date: '07/01/2022 16:15:22',
                 text: 'Ah scusa!',
                 status: 'received'
             }
@@ -69,87 +75,177 @@ let allContacts = [
         name: 'Luisa',
         avatar: '_4',
         visible: true,
+        chatOpen: false,
+        lastMessage: null,
         messages: [
         ], //test su nuova chat
     },
 ]
 
+const months = [
+    "January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"
+];
+
+let weekdays = [
+    "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+];
 
 var app = new Vue(
     {
         el: "#root",
         data: {
-            contacts : allContacts,
-            chat : allContacts[0],
-            inputText : null,
-            searchBar : null,
+            contacts: allContacts,
+            chat: allContacts[0],
+            inputText: null,
+            searchBar: null,
+            dateToday: dayjs(),
         },
-        methods: {
-            openChat : function(elemento){
-                console.log(elemento.name);
+        methods: { //AL CLICK APRE LA CHAT CORRISPONDENTE
+            openChat: function (elemento) {
                 this.chat = elemento;
+                for (let i = 0; i < this.contacts.length; i++)
+                    this.contacts[i].chatOpen = false;
+                elemento.chatOpen = true;
             },
-            writeMessage : function(elemento){
-                console.log(this.inputText);
-                let newMessage = {
-                    date: '10/01/2020 15:50:00',
-                    text: this.inputText,
-                    status: 'sent'
-                };
-                elemento.messages.push(newMessage);
-                this.inputText = "";
-                this.reply(elemento);
+            writeMessage: function (elemento) {
+                //PERMETTE DI SCRIVERE MESSAGGI IN CHAT
+                let controlloTesto = this.inputText.replace(/\s/g, '');
+                if (controlloTesto != "" && controlloTesto != null) {
+                    let newMessage = {
+                        date: this.dateToday.format('DD-MM-YYYY:HH-mm'),
+                        text: this.inputText,
+                        status: 'sent'
+                    };
+                    elemento.messages.push(newMessage);
+                    this.dateFormat();
+                    this.inputText = "";
+                    this.reply(elemento);
+                }
             },
-            reply : function(elemento){
-                    setTimeout(() => {
-                        let newMessage = {
-                            date: '10/01/2020 15:50:00',
-                            text: 'ok',
-                            status: 'received'
-                        };
-                        elemento.messages.push(newMessage);
-                    }, 1500);
+            reply: function (elemento) {
+                //LA RISPOSTA AUTOMATICA DEL BOT
+                setTimeout(() => {
+                    let newMessage = {
+                        date: this.dateToday,
+                        text: 'ok',
+                        status: 'received'
+                    };
+                    elemento.messages.push(newMessage);
+                    this.dateFormat();
+                }, 1500);
             },
-            searchContact : function(){
+            searchContact: function () {
+                //RICERCA CONTATTI CHE CONTENGONO LE INIZIALI SCRITTE
                 let searchTemp = this.searchBar.toLowerCase();
                 searchTemp = searchTemp.replace(/\s/g, '');
 
-                for(let i=0; i<this.contacts.length; i++)
+                for (let i = 0; i < this.contacts.length; i++)
                     this.contacts[i].visible = true;
-                
-                if(this.searchBar != null && this.searchBar != "" )
-                    for(let i=0; i<this.contacts.length; i++)
-                        if(!(this.contacts[i].name.toLowerCase()).includes(searchTemp))
+
+                if (this.searchBar != null && this.searchBar != "")
+                    for (let i = 0; i < this.contacts.length; i++)
+                        if (!(this.contacts[i].name.toLowerCase()).includes(searchTemp))
                             this.contacts[i].visible = false;
             },
-            showMessageMenu : function(index,hover){
+            showMessageMenu: function (index, hover) {
+                //PERMETTE L'APERTURA DEL MENU SUL CLICK
+                //SU UN MESSAGGIO
                 let menu = document.getElementsByClassName('message-button');
-                if(hover)
-                    menu[index].style.display ="block";
+                if (hover)
+                    menu[index].style.display = "flex";
                 else
-                    menu[index].style.display ="none";
+                    menu[index].style.display = "none";
             },
-            messageMenu : function(index){
+            messageMenu: function (index) {
+                //MENU SUL CLICK
                 let menu = document.getElementsByClassName('message-menu');
-                    if(menu[index].style.display == "block")
-                        menu[index].style.display ="none";
-                    else
-                        menu[index].style.display ="block";
+                //sposta il pannello del cancella messaggio correttamente, 
+                //sopra se si supera la metà della heigth della finestra,
+                //altrimenti sotto
+                if (event.clientY > document.documentElement.clientHeight / 2)
+                    menu[index].style.top = "-80px";
+                else
+                    menu[index].style.top = "20px";
+                if (menu[index].style.display == "block") {
+                    menu[index].style.display = "none";
+                    menu[index].classList.remove('visible');
+                } else {
+                    menu[index].style.display = "block";
+                    setTimeout(() => {
+                        menu[index].className += ' visible';
+                    }, 0); //aggiungle la classe dopo l'add event a 179js
+                }
             },
-            deleteMessage : function(mess,index){
-                let boh;
-                for(let i=0; i<this.contacts.length; i++){
-                    boh = this.contacts[i].messages.indexOf(mess);
-                    if(boh != -1){
-                        boh = i;
+            deleteMessage: function (mess, index) {
+                //PERMETTE DI CANCELLARE IL MESSAGGIO AL CLICK
+                let deleteTheMessage;
+                for (let i = 0; i < this.contacts.length; i++) {
+                    deleteTheMessage = this.contacts[i].messages.indexOf(mess);
+                    if (deleteTheMessage != -1) {
+                        deleteTheMessage = i;
                         break;
                     }
                 }
-                console.log(BroadcastChannel);
-                console.log(mess,index);
-                this.contacts[boh].messages.splice(index,1);
+                this.contacts[deleteTheMessage].messages.splice(index, 1);
                 this.messageMenu(index);
-            }
+            },
+            dateFormat: function () {
+                //converte e poi modifica tutte le date dei messaggi
+                //inoltre aggiorna l'ultimo messaggio ricevuto/inviato
+                dayjs.extend(window.dayjs_plugin_customParseFormat);
+                let contact = this.contacts;
+                for (let i = 0; i < contact.length; i++) {
+                    let message = contact[i].messages;
+                    for (let j = 0; j < message.length; j++) {
+                        let time = dayjs(message[j].date, "DD-MM-YYYY:HH-mm");
+                        contact[i].lastMessage = time.$D + "/" + (time.$M + 1) + "/" + time.$y;
+                        message[j].date = time;
+                        if (j == message.length - 1) {
+                            const date1 = this.dateToday;
+                            const date2 = time;
+                            date1.format('DD-MM-YYYY:HH-mm');
+                            date2.format('DD-MM-YYYY:HH-mm');
+                            let difference = date1.diff(date2, 'week');
+                            if (difference == 0) {
+                                difference = date1.$D - date2.$D;
+                                if (difference == 0)
+                                    contact[i].lastMessage = date1.$H + ":" + date2.$m;
+                                else if (difference == 1)
+                                    contact[i].lastMessage = 'Yesterday';
+                                else
+                                    contact[i].lastMessage = weekdays[difference];
+                            }
+                        }
+                    }
+                }
+
+            },
+        },
+        updated: function () {
+            //rimuove il menu al cambio chat, 
+            //perché se si lasciava il pannello
+            //del menu sul messaggio, rimaneva anche in un
+            //messaggio a caso su un'altra chat
+            let menu = document.getElementsByClassName('message-menu');
+            for (let i = 0; i < menu.length; i++)
+                menu[i].style.display = "none";
+        },
+        beforeCreate: function () {
+            //evento click globale, toglie tutti i pannelli
+            //del menu
+            window.addEventListener('click', function () {
+                let menu = document.getElementsByClassName('message-menu');
+                for (let i = 0; i < menu.length; i++)
+                    if (menu[i].classList.contains('visible')) {
+                        menu[i].classList.remove('visible');
+                        menu[i].style.display = "none";
+                    }
+            });
+        },
+        created: function () {
+            
+            this.dateFormat();
         }
     }
 );
