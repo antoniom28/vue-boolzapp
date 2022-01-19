@@ -41,7 +41,7 @@
 
             <div id="all-chat">
                 <div v-if="elemento.visible" v-for="(elemento,index) in contacts" @click="openChat(elemento)"
-                    class="contacts">
+                    class="contacts-box">
                     <div :class="{'focus-contact': elemento.chatOpen}" class="chat-contact">
                         <div id="contact-box">
                             <div class="profile-picture-contact">
@@ -56,7 +56,6 @@
                         <p class="time" v-if="elemento.messages.length > 0">{{elemento.lastMessage}}
                         </p>
                     </div>
-                    <hr>
                 </div>
             </div>
         </div> <!-- CONTACTS -->
