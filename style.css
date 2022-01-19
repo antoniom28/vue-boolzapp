@@ -240,8 +240,33 @@ hr {
     flex: 0 0 50px;
 }
 
-.profile-contact p {
+.profile-contact > * {
     margin: 0 10px;
+}
+
+.profile-contact span {
+    color: grey;
+    display: none;
+}
+
+.profile-contact span::after {
+    content: "";
+    animation: addDots 1s infinite;
+}
+
+@keyframes addDots {
+    0%{
+        content: "";
+    }
+    25%{
+        content: ".";
+    }
+    50%{
+        content: "..";
+    }
+    100%{
+        content: "...";
+    }
 }
 
 .filter-background {

@@ -133,6 +133,9 @@ var app = new Vue(
             reply: function (elemento) {
                 //LA RISPOSTA AUTOMATICA DEL BOT
                 setTimeout(() => {
+                    document.querySelector('.typing').style.display ="block";
+                }, 500);
+                setTimeout(() => {
                     let newMessage = {
                         date: this.dateToday,
                         text: 'ok',
@@ -140,6 +143,7 @@ var app = new Vue(
                     };
                     elemento.messages.push(newMessage);
                     this.dateFormat();
+                    document.querySelector('.typing').style.display ="none";
                 }, 1500);
             },
             searchContact: function () {

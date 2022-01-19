@@ -67,7 +67,10 @@
                     <div class="profile-picture-contact">
                         <img :src="'img/avatar/avatar'+chat.avatar+'.jpg'" alt="">
                     </div>
-                    <p>{{chat.name}}</p>
+                    <div>
+                        <p>{{chat.name}}</p>
+                        <span class="typing">typing</span>
+                    </div>
                 </div>
                 <div class="icons">
                     <i class="fas fa-search"></i>
