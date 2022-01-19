@@ -18,12 +18,12 @@ img {
     max-width:300px;
 }
 
-#input-image{
+[id*="input-image"]{
     width: 20px;
     flex: none;
     position: relative;
 }
-input#input-image::after {
+input[id*="input-image"]::after {
     content: "\f0c6";
     font-family: fontAwesome;
     width: 50px;
@@ -35,6 +35,20 @@ input#input-image::after {
     font-size: 1.5em;
     cursor: pointer;
     left: 0;
+}
+
+#input-image-profile{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+}
+
+input#input-image-profile::after{
+    content: "";
+    opacity: 0;
+    width: 100%;
+    height: 100%;
 }
 
 span {

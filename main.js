@@ -135,22 +135,34 @@ var app = new Vue(
             //volevo fare in modo che capisse che file gli
             //arrivasse ma, sono cose che credo faremo
             //quindi ho lasciato solo l'imm 
-            sendImage: function (elemento) {
-                console.log('entrato in send');
-                let input = document.getElementById("input-image");
+            sendImage: function (elemento,target) {
+                console.log('entrato in send',target);
+                let input = null;
+                let error = "";
+                if(target == 'background')
+                    input = document.getElementById("input-image-profile");
+                else if(target == 'send')
+                    input = document.getElementById("input-image");
+                else
+                    error = "ci scusiamo per il problema";
+
                 let fReader = new FileReader();
                 fReader.readAsDataURL(input.files[0]);
                 console.log(input.files[0]);
                 fReader.onloadend = function (event) {
                     let newMessage = {
                         date: app.$data.dateToday.format('DD-MM-YYYY:HH-mm'),
-                        text: this.inputText,
+                        text: error,
                         status: 'sent',
                         image: event.target.result,
                     };
-                    elemento.messages.push(newMessage);
-                    app.dateFormat();
-                    app.reply(elemento);
+                    if(target == 'send'){
+                        elemento.messages.push(newMessage);
+                        app.dateFormat();
+                        app.reply(elemento);
+                    } else{
+                        document.getElementById('user-profile-picture').style.backgroundImage = `url(${newMessage.image})`;
+                    }
                     input.value = null;
                 }
             },

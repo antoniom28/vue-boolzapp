@@ -13,7 +13,9 @@
     <div id="root">
         <div id="contacts">
             <div id="profile">
-                <div class="profile-picture"></div>
+                <div id="user-profile-picture" class="profile-picture">
+                    <input @change ="sendImage(chat,'background')" type="file" name="" id="input-image-profile">
+                </div>
                 <div class="icons">
                     <i class="fas fa-circle-notch"></i>
                     <i class="fas fa-comment-alt"></i>
@@ -101,7 +103,7 @@
             </div>
             <div id="chat-input">
                 <i class="far fa-laugh"></i>
-                <input @change ="sendImage(chat)" type="file" name="" id="input-image">
+                <input @change ="sendImage(chat,'send')" type="file" name="" id="input-image">
                 <input v-model="inputText" @keyup.enter="writeMessage(chat)" class="type-message" type="text"
                     placeholder="Type a message">
                 <i class="fas fa-microphone"></i>
