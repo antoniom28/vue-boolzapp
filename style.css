@@ -498,16 +498,18 @@ hr {
 }
 
 .image-sent-box{
-    width: 50px;
+    width: 65px;
     display: inline-block;
     overflow: hidden;
     height: 50px;
     margin-right: 5px;
+    border-radius: 10px;
 }
 
 .image-sent-box img{
     position: static;
     transform: none;
+    min-height: 100%;
 }
 
 .info-box{
