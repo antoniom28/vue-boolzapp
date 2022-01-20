@@ -92,11 +92,13 @@ let weekdays = [
     "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
 ];
 
+Vue.use(EmojiPicker);
+
 var app = new Vue(
     {
         el: "#root",
         data: {
-            
+            search: '',
             contacts: allContacts,
             chat: null,
             inputText: null,
@@ -118,8 +120,15 @@ var app = new Vue(
                 imageSent: [],
             },
         },
-        methods: { //AL CLICK APRE LA CHAT CORRISPONDENTE
+        methods: 
+        { //AL CLICK APRE LA CHAT CORRISPONDENTE
+            append: function(emoji) {
+                if( this.inputText == null)
+                this.inputText = ""
+                this.inputText += emoji
+              },
             openChat: function (elemento) {
+                this.inputText = null,
                 this.switchInfo('all');
                 this.chat = elemento;
                 for (let i = 0; i < this.contacts.length; i++)
