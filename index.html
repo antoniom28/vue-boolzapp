@@ -51,8 +51,8 @@
                             </div>
                             <div class="contact-name">
                                 <p>{{elemento.name}}</p>
-                                <span v-if="elemento.messages.length > 0">{{elemento.messages[elemento.messages.length -
-                                    1].text}}</span>
+                                <span v-if="elemento.messages.length > 0">{{
+                                    elemento.messages[elemento.messages.length - 1].text}}</span>
                             </div>
                         </div>
                         <p class="time" v-if="elemento.messages.length > 0">{{elemento.lastMessage}}
@@ -62,8 +62,8 @@
             </div>
         </div> <!-- CONTACTS -->
 
-        <div id="your-chat">
-            <div id="chat-name" class="standard-header">
+        <div id="your-chat" class="standard-box">
+            <div @click="showInfoProfile(chat)" id="chat-name" class="standard-header">
                 <div class="profile-contact">
                     <div class="profile-picture-contact">
                         <img :src="'img/avatar/avatar'+chat.avatar+'.jpg'" alt="">
@@ -110,9 +110,9 @@
             </div>
         </div>
 
-        <div v-if="info" id="show-info-box">
+        <div v-if="infoMess" id="show-info-box" class="standard-box">
             <div class="info-box standard-header">
-                <i @click="switchInfo()" class="fas fa-times"></i>
+                <i @click="switchInfo('message')" class="fas fa-times"></i>
                 <p>Message Info</p>
             </div>
             <div class="filter-background"></div>
@@ -122,10 +122,30 @@
                     <p v-else>{{infoMessage.text}}</p>
                 </div>
             </div>
-            <div class="info-time">
+            <div id="info-time" class="standard-info-box">
                 <div class="info-time-box">
                     <p>Delivered</p>
                 <span>{{infoMessage.date}}</span>
+                </div>
+            </div>
+        </div> 
+
+         
+        <div v-if="infoProfile" id="show-profile-info-box" class="standard-box">
+            <div class="info-box standard-header">
+                <i @click="switchInfo('profile')" class="fas fa-times"></i>
+                <p>Contact Info</p>
+            </div>
+            <div class="info-contact info-contact-profile">
+                <div id="info-profile-picture">
+                    <img :src="'img/avatar/avatar'+infoProfileObj.image+'.jpg'" alt="">
+                </div>
+                <p>{{infoProfileObj.name}}</p>
+            </div>
+            <div id="info-profile-box" class="standard-info-box">
+                <div class="info-time-box">
+                    <p>About</p>
+                    <p>{{infoProfileObj.statusText}}</p>
                 </div>
             </div>
         </div>

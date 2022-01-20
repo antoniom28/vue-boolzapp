@@ -5,6 +5,7 @@ let allContacts = [
         visible: true,
         chatOpen: false,
         lastMessage: null,
+        statusText : "il primo test è sempre il più bello",
         messages: [
             {
                 date: '10/01/2020 15:30:55',
@@ -29,6 +30,7 @@ let allContacts = [
         visible: true,
         chatOpen: false,
         lastMessage: null,
+        statusText : "se potessi fermare il tempo come una fotografia, prenderei questo momento, ci farei un'enorme gigantografia.",
         messages: [
             {
                 date: '20/03/2020 16:30:00',
@@ -53,6 +55,7 @@ let allContacts = [
         visible: true,
         chatOpen: false,
         lastMessage: null,
+        statusText : "non c'è futuro per chi vive nel passato",
         messages: [
             {
                 date: '28/03/2020 10:10:40',
@@ -77,6 +80,7 @@ let allContacts = [
         visible: true,
         chatOpen: false,
         lastMessage: null,
+        statusText : "non chatto con nessuno, figurati se metto uno stato",
         messages: [
         ], //test su nuova chat
     },
@@ -100,18 +104,25 @@ var app = new Vue(
             inputText: null,
             searchBar: null,
             dateToday: dayjs(),
-            info: false,
+            infoMess: false,
+            infoProfile: false,
             inputImage : null,
             infoMessage: {
-                text: "cia",
-                date: "data",
-                status: 'sent',
+                text: null,
+                date: null,
+                status: null,
                 image : null,
+            },
+            infoProfileObj: {
+                name : null,
+                image : null,
+                statusText : null,
             },
         },
         methods: { //AL CLICK APRE LA CHAT CORRISPONDENTE
             openChat: function (elemento) {
-                this.info = false;
+                this.infoMess = false;
+                this.infoProfile = false;
                 this.chat = elemento;
                 for (let i = 0; i < this.contacts.length; i++)
                     this.contacts[i].chatOpen = false;
@@ -208,7 +219,7 @@ var app = new Vue(
             },
             messageMenu: function (index) {
                 //MENU SUL CLICK
-                if(!this.info){
+                if(!this.infoMess || !this.infoProfile){
                     let menu = document.getElementsByClassName('message-menu');
                     //sposta il pannello del cancella messaggio correttamente, 
                     //sopra se si supera la metà della heigth della finestra,
@@ -226,11 +237,13 @@ var app = new Vue(
                             menu[index].className += ' visible';
                         }, 0); //aggiungle la classe dopo l'add event a 179js
                     }
-                } else
-                    this.info = false;
+                } else{
+                    this.infoMess = false;
+                    this.infoProfile = false;
+                }
             },
             showInfo: function (mess) {
-                this.switchInfo();
+                this.switchInfo('message');
                 const maxW = document.documentElement.clientWidth;
                 let mainChatWidth = document.getElementById('your-chat').clientWidth;
                 setTimeout(() => {
@@ -248,8 +261,34 @@ var app = new Vue(
                     this.infoMessage.image = mess.image;
                 }, 10);
             },
-            switchInfo: function () {
-                this.info = !this.info;
+            showInfoProfile: function (chat) {
+                this.switchInfo('profile');
+                console.log(chat);
+                const maxW = document.documentElement.clientWidth;
+                let mainChatWidth = document.getElementById('your-chat').clientWidth;
+                setTimeout(() => {
+                    if (maxW <= 992) {
+                        document.getElementById('show-profile-info-box').style.left = `${maxW / 2 - 100}px`;
+                        document.getElementById('show-profile-info-box').style.flex = `1 0 ${mainChatWidth}px`;
+                        setTimeout(() => {
+                            mainChatWidth = document.getElementById('your-chat').clientWidth;
+                            document.getElementById('show-profile-info-box').style.left = `-${mainChatWidth + 1}px`;
+                        }, 10);
+                    }
+                    this.infoProfileObj.name = chat.name;
+                    this.infoProfileObj.image = chat.avatar;
+                    this.infoProfileObj.statusText = chat.statusText;
+                }, 10);
+            },
+            switchInfo: function (infoType) {
+                if(infoType == 'message'){
+                    this.infoMess = !this.infoMess;
+                    this.infoProfile = false;
+                }
+                else{
+                    this.infoProfile = !this.infoProfile;
+                    this.infoMess = false;
+                }
             },
             deleteMessage: function (mess, index) {
                 //PERMETTE DI CANCELLARE IL MESSAGGIO AL CLICK
@@ -296,7 +335,8 @@ var app = new Vue(
 
             },
             resize: function () {
-                this.info = false;
+                this.infoMess = false;
+                this.infoProfile = false;
                /* console.log(document.documentElement.clientWidth);
                     if (window.innerWidth > document.documentElement.clientWidth) {
                         document.getElementById('root').style.height = `calc(100vh - 16px)`;

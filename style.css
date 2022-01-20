@@ -238,18 +238,7 @@ hr {
     padding: 15px 0;
 }
 
-#your-chat {
-    float: right;
-    border-left: 1px solid #c1c1c1;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    position: relative;
-    background-color: #e5ddd5;
-}
-
-#show-info-box{
+.standard-box{
     border-left: 1px solid #c1c1c1;
     display: flex;
     flex-direction: column;
@@ -267,6 +256,10 @@ hr {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+#chat-name{
+    cursor: pointer;
 }
 
 #chat-name .icons {
@@ -344,6 +337,31 @@ hr {
     width: 100%;
     overflow: auto;
     position: relative;
+}
+
+.info-contact{
+    height: 300px;
+    width: 100%;
+    overflow: auto;
+    position: relative;
+    background-color: white;
+}
+
+.info-contact-profile{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 1.5em;
+}
+
+#info-profile-picture {
+    background-color: black;
+    width: 180px;
+    position: relative;
+    overflow: hidden;
+    height: 180px;
+    border-radius: 50%;
 }
 
 #chat .time {
@@ -454,9 +472,22 @@ hr {
     z-index: 333;
 }
 
+.standard-info-box{
+    margin-top: 8px;
+    width: 100%;
+    background-color: #ededed;
+    flex: 1 0 auto;
+    z-index: 333;
+}
+
 .info-time-box{
     background-color: white;
     padding: 30px 0px 10px 50px;
+}
+
+.info-time-box p:first-child{
+    color: gray;
+    margin-bottom: 10px;
 }
 
 .info-box{
