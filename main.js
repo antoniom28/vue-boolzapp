@@ -141,7 +141,7 @@ var app = new Vue(
             //quindi ho lasciato solo l'imm 
             sendImage: function (elemento,target) {
                 let input = null;
-                let error = "";
+                let error = "image";
                 if(target == 'background')
                     input = document.getElementById("input-image-profile");
                 else if(target == 'send')
@@ -208,23 +208,26 @@ var app = new Vue(
             },
             messageMenu: function (index) {
                 //MENU SUL CLICK
-                let menu = document.getElementsByClassName('message-menu');
-                //sposta il pannello del cancella messaggio correttamente, 
-                //sopra se si supera la metà della heigth della finestra,
-                //altrimenti sotto
-                if (event.clientY > document.documentElement.clientHeight / 2)
-                    menu[index].style.top = "-80px";
-                else
-                    menu[index].style.top = "20px";
-                if (menu[index].style.display == "block") {
-                    menu[index].style.display = "none";
-                    menu[index].classList.remove('visible');
-                } else {
-                    menu[index].style.display = "block";
-                    setTimeout(() => {
-                        menu[index].className += ' visible';
-                    }, 0); //aggiungle la classe dopo l'add event a 179js
-                }
+                if(!this.info){
+                    let menu = document.getElementsByClassName('message-menu');
+                    //sposta il pannello del cancella messaggio correttamente, 
+                    //sopra se si supera la metà della heigth della finestra,
+                    //altrimenti sotto
+                    if (event.clientY > document.documentElement.clientHeight / 2)
+                        menu[index].style.top = "-80px";
+                    else
+                        menu[index].style.top = "20px";
+                    if (menu[index].style.display == "block") {
+                        menu[index].style.display = "none";
+                        menu[index].classList.remove('visible');
+                    } else {
+                        menu[index].style.display = "block";
+                        setTimeout(() => {
+                            menu[index].className += ' visible';
+                        }, 0); //aggiungle la classe dopo l'add event a 179js
+                    }
+                } else
+                    this.info = false;
             },
             showInfo: function (mess) {
                 this.switchInfo();
@@ -294,11 +297,11 @@ var app = new Vue(
             },
             resize: function () {
                 this.info = false;
-                if (window.innerHeight > document.documentElement.clientHeight) {
-                    const scrollBar = window.innerHeight - document.documentElement.clientHeight;
-                    document.getElementById('root').style.height = `calc(100vh - ${scrollBar + 1}px)`;
-                } else
-                    document.getElementById('root').style.height = `100vh`;
+               /* console.log(document.documentElement.clientWidth);
+                    if (window.innerWidth > document.documentElement.clientWidth) {
+                        document.getElementById('root').style.height = `calc(100vh - 16px)`;
+                    } else
+                        document.getElementById('root').style.height = `100vh`;*/
             }
         },
         updated: function () {

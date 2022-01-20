@@ -63,7 +63,7 @@
         </div> <!-- CONTACTS -->
 
         <div id="your-chat">
-            <div id="chat-name">
+            <div id="chat-name" class="standard-header">
                 <div class="profile-contact">
                     <div class="profile-picture-contact">
                         <img :src="'img/avatar/avatar'+chat.avatar+'.jpg'" alt="">
@@ -85,8 +85,8 @@
                     v-for="(message,index) in chat.messages">
                     <div v-if="chat.messages.length > 0" class="mess" :class="message.status">
                         <div>
-                            {{message.text}}
                             <img v-if="message.image != null" class="image-sent" :src="message.image" alt="">
+                            <p v-else>{{message.text}}</p>
                         </div>
                         <span class="time">
                             {{message.date.$H}}:{{message.date.$m}}
@@ -111,15 +111,15 @@
         </div>
 
         <div v-if="info" id="show-info-box">
-            <div id="chat-name" class="info-box">
+            <div class="info-box standard-header">
                 <i @click="switchInfo()" class="fas fa-times"></i>
                 <p>Message Info</p>
             </div>
             <div class="filter-background"></div>
             <div class="info-message">
                 <div :class="infoMessage.status" class="mess margin-info">
-                    {{infoMessage.text}}
                     <img v-if="infoMessage.image != null" class="image-sent" :src="infoMessage.image" alt="">
+                    <p v-else>{{infoMessage.text}}</p>
                 </div>
             </div>
             <div class="info-time">
