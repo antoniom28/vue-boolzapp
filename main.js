@@ -264,7 +264,6 @@ var app = new Vue(
             },
             showInfoProfile: function (chat) {
                 if(!this.infoProfile){
-                console.log(chat);
                 const maxW = document.documentElement.clientWidth;
                 let mainChatWidth = document.getElementById('your-chat').clientWidth;
                 setTimeout(() => {
@@ -276,10 +275,11 @@ var app = new Vue(
                             document.getElementById('show-profile-info-box').style.left = `-${mainChatWidth + 1}px`;
                         }, 10);
                     }
-                    
+
                     this.infoProfileObj.name = chat.name;
                     this.infoProfileObj.image = chat.avatar;
                     this.infoProfileObj.statusText = chat.statusText;
+                    this.infoProfileObj.imageSent = [];
                     for(let i=0; i<chat.messages.length; i++){
                         let erroreStessaImmagine = false;
                         if(chat.messages[i].image != undefined){
