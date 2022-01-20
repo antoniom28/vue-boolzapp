@@ -62,7 +62,8 @@
             </div>
         </div> <!-- CONTACTS -->
 
-        <div id="your-chat" class="standard-box">
+        <div class="standard-box first-access" v-if="chat === null"></div>
+        <div v-else id="your-chat" class="standard-box">
             <div @click="showInfoProfile(chat)" id="chat-name" class="standard-header">
                 <div class="profile-contact">
                     <div class="profile-picture-contact">
