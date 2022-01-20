@@ -339,7 +339,7 @@ hr {
 }
 
 .info-message {
-    /* display: inline-block; */
+    max-height: 40%;
     width: 100%;
     overflow: auto;
     position: relative;

@@ -119,7 +119,11 @@ var app = new Vue(
             },
             writeMessage: function (elemento) {
                 //PERMETTE DI SCRIVERE MESSAGGI IN CHAT
-                let controlloTesto = this.inputText.replace(/\s/g, '');
+                let controlloTesto = null;
+                if(this.inputText != "" && this.inputText != null)
+                    controlloTesto = this.inputText.replace(/\s/g, '');
+                else
+                    return;
                 if (controlloTesto != "" && controlloTesto != null) {
                     let newMessage = {
                         date: this.dateToday.format('DD-MM-YYYY:HH-mm'),
@@ -136,7 +140,6 @@ var app = new Vue(
             //arrivasse ma, sono cose che credo faremo
             //quindi ho lasciato solo l'imm 
             sendImage: function (elemento,target) {
-                console.log('entrato in send',target);
                 let input = null;
                 let error = "";
                 if(target == 'background')
@@ -148,7 +151,6 @@ var app = new Vue(
 
                 let fReader = new FileReader();
                 fReader.readAsDataURL(input.files[0]);
-                console.log(input.files[0]);
                 fReader.onloadend = function (event) {
                     let newMessage = {
                         date: app.$data.dateToday.format('DD-MM-YYYY:HH-mm'),
@@ -228,10 +230,8 @@ var app = new Vue(
                 this.switchInfo();
                 const maxW = document.documentElement.clientWidth;
                 let mainChatWidth = document.getElementById('your-chat').clientWidth;
-                console.log(mainChatWidth);
                 setTimeout(() => {
                     if (maxW <= 992) {
-                        console.log(maxW, document.getElementById('show-info-box'));
                         document.getElementById('show-info-box').style.left = `${maxW / 2 - 100}px`;
                         document.getElementById('show-info-box').style.flex = `1 0 ${mainChatWidth}px`;
                         setTimeout(() => {
