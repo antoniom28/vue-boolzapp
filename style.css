@@ -276,6 +276,11 @@ hr {
     overflow: hidden;
 }
 
+#show-profile-info-box{
+    overflow: auto;
+    z-index: 999;
+}
+
 .profile-contact {
     display: flex;
     align-items: center;
@@ -353,6 +358,7 @@ hr {
     justify-content: space-evenly;
     align-items: center;
     font-size: 1.5em;
+    flex: 0 0 auto;
 }
 
 #info-profile-picture {
@@ -480,17 +486,32 @@ hr {
     z-index: 333;
 }
 
-.info-time-box{
+.info-standard-box{
     background-color: white;
     padding: 30px 0px 10px 50px;
+    margin-top: 10px;
 }
 
-.info-time-box p:first-child{
+.info-standard-box p:first-child{
     color: gray;
     margin-bottom: 10px;
 }
 
+.image-sent-box{
+    width: 50px;
+    display: inline-block;
+    overflow: hidden;
+    height: 50px;
+    margin-right: 5px;
+}
+
+.image-sent-box img{
+    position: static;
+    transform: none;
+}
+
 .info-box{
+    flex:0 0 auto;
     justify-content: flex-start!important;
 }
 

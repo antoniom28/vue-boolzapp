@@ -123,7 +123,7 @@
                 </div>
             </div>
             <div id="info-time" class="standard-info-box">
-                <div class="info-time-box">
+                <div class="info-time-box info-standard-box">
                     <p>Delivered</p>
                 <span>{{infoMessage.date}}</span>
                 </div>
@@ -143,9 +143,15 @@
                 <p>{{infoProfileObj.name}}</p>
             </div>
             <div id="info-profile-box" class="standard-info-box">
-                <div class="info-time-box">
+                <div class="info-about-box info-standard-box">
                     <p>About</p>
                     <p>{{infoProfileObj.statusText}}</p>
+                </div>
+                <div class="info-media-box info-standard-box">
+                    <p>All Media</p>
+                    <div v-for="elemento in infoProfileObj.imageSent" class="image-sent-box">
+                        <img :src="elemento" alt="">
+                    </div>
                 </div>
             </div>
         </div>

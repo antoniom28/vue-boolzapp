@@ -117,6 +117,7 @@ var app = new Vue(
                 name : null,
                 image : null,
                 statusText : null,
+                imageSent : [],
             },
         },
         methods: { //AL CLICK APRE LA CHAT CORRISPONDENTE
@@ -262,7 +263,7 @@ var app = new Vue(
                 }, 10);
             },
             showInfoProfile: function (chat) {
-                this.switchInfo('profile');
+                if(!this.infoProfile){
                 console.log(chat);
                 const maxW = document.documentElement.clientWidth;
                 let mainChatWidth = document.getElementById('your-chat').clientWidth;
@@ -275,10 +276,27 @@ var app = new Vue(
                             document.getElementById('show-profile-info-box').style.left = `-${mainChatWidth + 1}px`;
                         }, 10);
                     }
+                    
                     this.infoProfileObj.name = chat.name;
                     this.infoProfileObj.image = chat.avatar;
                     this.infoProfileObj.statusText = chat.statusText;
+                    for(let i=0; i<chat.messages.length; i++){
+                        let erroreStessaImmagine = false;
+                        if(chat.messages[i].image != undefined){
+                            for(let j=0; j<this.infoProfileObj.imageSent.length; j++){
+                                if(this.infoProfileObj.imageSent[j] == chat.messages[i].image)
+                                    erroreStessaImmagine = true;
+                            }
+                            if(!erroreStessaImmagine){
+                                this.infoProfileObj.imageSent.push(chat.messages[i].image);
+                                console.log(this.infoProfileObj.imageSent);
+                            }
+                        }
+                    }
                 }, 10);
+                }
+                
+                this.switchInfo('profile');
             },
             switchInfo: function (infoType) {
                 if(infoType == 'message'){
@@ -337,11 +355,6 @@ var app = new Vue(
             resize: function () {
                 this.infoMess = false;
                 this.infoProfile = false;
-               /* console.log(document.documentElement.clientWidth);
-                    if (window.innerWidth > document.documentElement.clientWidth) {
-                        document.getElementById('root').style.height = `calc(100vh - 16px)`;
-                    } else
-                        document.getElementById('root').style.height = `100vh`;*/
             }
         },
         updated: function () {
