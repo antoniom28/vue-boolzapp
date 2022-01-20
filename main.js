@@ -86,6 +86,8 @@ let allContacts = [
     },
 ]
 
+dayjs.extend(window.dayjs_plugin_customParseFormat);
+
 let weekdays = [
     "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
 ];
@@ -94,6 +96,7 @@ var app = new Vue(
     {
         el: "#root",
         data: {
+            
             contacts: allContacts,
             chat: null,
             inputText: null,
@@ -181,7 +184,7 @@ var app = new Vue(
                 }, 500);
                 setTimeout(() => {
                     let newMessage = {
-                        date: this.dateToday,
+                        date: this.dateToday.format('DD-MM-YYYY:HH-mm'),
                         text: 'ok',
                         status: 'received'
                     };
@@ -242,7 +245,9 @@ var app = new Vue(
                     let elemento = document.getElementById('show-info-box');
                     this.slideInfoBox(elemento, mainChatWidth, maxW);
                     this.infoMessage.text = mess.text;
-                    this.infoMessage.date = mess.date;
+                    console.log(mess.date);
+                    this.infoMessage.date = mess.date.$d + "";
+                    console.log(this.infoMessage.date);
                     this.infoMessage.status = mess.status;
                     this.infoMessage.image = mess.image;
                 }, 10);
@@ -314,7 +319,6 @@ var app = new Vue(
             dateFormat: function () {
                 //converte e poi modifica tutte le date dei messaggi
                 //inoltre aggiorna l'ultimo messaggio ricevuto/inviato
-                dayjs.extend(window.dayjs_plugin_customParseFormat);
                 let contact = this.contacts;
                 for (let i = 0; i < contact.length; i++) {
                     let message = contact[i].messages;

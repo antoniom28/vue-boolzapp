@@ -364,11 +364,11 @@ hr {
     justify-content: space-evenly;
     align-items: center;
     font-size: 1.5em;
-    flex: 0 0 auto;
+    flex: 0 0 280px;
 }
 
 #info-profile-picture {
-    background-color: black;
+    background-color: white;
     width: 180px;
     position: relative;
     overflow: hidden;
