@@ -238,6 +238,12 @@ hr {
     padding: 15px 0;
 }
 
+.first-access{
+    background-image: url(img/start-chat.png);
+    background-size: cover;
+    background-position: center center;
+}
+
 .standard-box{
     border-left: 1px solid #c1c1c1;
     display: flex;
@@ -504,6 +510,7 @@ hr {
     height: 50px;
     margin-right: 5px;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .image-sent-box img{
@@ -543,3 +550,4 @@ hr {
     display: flex;
     flex: 1 0 auto;
 }
+
