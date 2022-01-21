@@ -88,9 +88,20 @@ let allContacts = [
 
 dayjs.extend(window.dayjs_plugin_customParseFormat);
 
+let frasi = [
+    "Perfetto","Va bene","Heilà","Tutto bene",
+    "Er0r3: 18, volevo dire Ciao..","a te e famiglia","Non sto tanto bene oggi scusami..",
+    "A che ora avevi detto oggi?","ma quindi domani cosa si fa?",
+    "Guarda che sono un bot","sto mangiando, ci sentiamo dopo"
+    ,"chiamami direttamente no?","Bella foto","oh ma quando cambi foto profilo?"
+];
+
 let weekdays = [
     "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
 ];
+
+let fontList = ["sans-serif","cursive","normal","monospace","fantasy"];
+let fontSelected = 1;
 
 Vue.use(EmojiPicker);
 
@@ -107,6 +118,7 @@ var app = new Vue(
             infoMess: false,
             infoProfile: false,
             inputImage: null,
+            darkTheme : false,
             infoMessage: {
                 text: null,
                 date: null,
@@ -196,9 +208,10 @@ var app = new Vue(
                     document.querySelector('.typing').style.display = "block";
                 }, 10);
                 setTimeout(() => {
+                    let random = Math.floor(Math.random()*frasi.length);
                     let newMessage = {
                         date: this.dateToday.format('DD-MM-YYYY:HH-mm'),
-                        text: 'ok',
+                        text: frasi[random],
                         status: 'received'
                     };
                     elemento.messages.push(newMessage);
@@ -239,15 +252,8 @@ var app = new Vue(
                         menu[index].style.top = "-80px";
                     else
                         menu[index].style.top = "20px";
-                    if (menu[index].style.display == "block") {
-                        menu[index].style.display = "none";
-                        menu[index].classList.remove('visible');
-                    } else {
-                        menu[index].style.display = "block";
-                        setTimeout(() => {
-                            menu[index].className += ' visible';
-                        }, 0); //aggiungle la classe dopo l'add event a 179js
-                    }
+
+                    this.openBox(menu[index]);
                 } else
                     this.switchInfo('all');
             },
@@ -426,6 +432,28 @@ var app = new Vue(
                     //giusto per essere sicuri 
                     chatDisplay.scrollTop = chatDisplay.clientHeight + 2000;
                 }, 0);
+            },
+            changeFont : function() {
+                document.getElementById('root').style.fontFamily = fontList[fontSelected++];
+                if(fontSelected >= fontList.length)
+                    fontSelected = 0;
+            },
+            changeTheme: function() {
+                this.darkTheme = !this.darkTheme;                
+            },
+            openSettings : function (){
+                this.openBox(document.getElementById('settings-box'));
+            },
+            openBox : function(element) {
+                if (element.style.display == "block") {
+                    element.style.display = "none";
+                    element.classList.remove('visible');
+                } else {
+                    element.style.display = "block";
+                    setTimeout(() => {
+                        element.className += ' visible';
+                    }, 0);
+                }
             }
         },
         updated: function () {
@@ -448,6 +476,10 @@ var app = new Vue(
                         menu[i].classList.remove('visible');
                         menu[i].style.display = "none";
                     }
+                if(document.getElementById('settings-box').classList.contains('visible')){
+                    document.getElementById('settings-box').classList.remove('visible');
+                    document.getElementById('settings-box').style.display ="none";
+                }
             });
         },
         created: function () {

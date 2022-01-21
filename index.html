@@ -13,7 +13,7 @@
 <body>
     <!-- Schermata del primo caricamento -->
     <div id="wait-load"></div>
-    <div id="root">
+    <div id="root" :class="{'dark-theme':darkTheme}">
         <div id="contacts">
             <!-- prima colonna -->
             <div id="profile">
@@ -23,13 +23,18 @@
                     <i @click="addNewContact()" class="fas fa-plus"></i>
                 </div>
                 <!-- riga imm profilo e opzioni -->
-                <div id="user-profile-picture" class="profile-picture">
+                <div id="user-profile-picture" class="profile-picture" :class="{'dark-theme':darkTheme}">
                     <input @change="sendImage(chat,'background')" type="file" name="" id="input-image-profile">
                 </div>
                 <div class="icons">
                     <i class="fas fa-circle-notch"></i>
-                    <i @click="showNewBox(true)" class="fas fa-user-plus"></i>
-                    <i class="fas fa-ellipsis-v"></i>
+                    <i @click="showNewBox(true)" id="add-new-contact-icons" class="fas fa-user-plus"></i>
+                    <i @click="openSettings()" id="settings" class="fas fa-ellipsis-v">
+                        <div id="settings-box">
+                            <span @click="changeFont()" id="change-font">Change font</span>
+                            <span @click="changeTheme()" id="change-theme">Change Theme</span>
+                        </div>
+                    </i>
                 </div>
             </div>
 
@@ -57,7 +62,7 @@
                     class="contacts-box">
                     <div :class="{'focus-contact': elemento.chatOpen}" class="chat-contact">
                         <div id="contact-box">
-                            <div class="profile-picture-contact">
+                            <div class="profile-picture-contact" :class="{'dark-theme':darkTheme}">
                                 <img :src="'img/avatar/avatar'+elemento.avatar+'.jpg'" alt="">
                             </div>
                             <div class="contact-name">
@@ -81,7 +86,7 @@
             <!-- prima riga di nome e info contatto chat aperta -->
             <div @click="showInfoProfile(chat)" id="chat-name" class="standard-header">
                 <div class="profile-contact">
-                    <div class="profile-picture-contact">
+                    <div class="profile-picture-contact" :class="{'dark-theme':darkTheme}">
                         <img :src="'img/avatar/avatar'+chat.avatar+'.jpg'" alt="">
                     </div>
                     <div>
@@ -101,9 +106,9 @@
                 <div @mouseenter="showMessageMenu(index,true)" @mouseleave="showMessageMenu(index,false)"
                     v-for="(message,index) in chat.messages">
                     <div v-if="chat.messages.length > 0" class="mess" :class="message.status">
-                        <div>
+                        <div :class="{'dark-theme':darkTheme}">
                             <img v-if="message.image != null" class="image-sent" :src="message.image" alt="">
-                            <p v-else>{{message.text}}</p>
+                            <p :class="{'color-white':darkTheme}" v-else>{{message.text}}</p>
                         </div>
                         <span class="time">
                             {{message.date.$H}}:{{message.date.$m}}
@@ -131,15 +136,17 @@
                     </div>
                     <div slot="emoji-picker" slot-scope="{ emojis, insert, display }">
                         <div class="emoji-picker">
-                            <div class="emoji-picker__search">
-                                <input type="text" v-model="search">
-                            </div>
-                            <div>
-                                <div v-for="(emojiGroup, category) in emojis" :key="category">
-                                    <h5>{{ category }}</h5>
-                                    <div class="emojis">
-                                        <span v-for="(emoji, emojiName) in emojiGroup" :key="emojiName"
-                                            @click="insert(emoji)" :title="emojiName">{{ emoji }}</span>
+                            <div id="no-dark-emoji" :class="{'dark-theme':darkTheme}">
+                                <div class="emoji-picker__search">
+                                    <input type="text" v-model="search">
+                                </div>
+                                <div>
+                                    <div v-for="(emojiGroup, category) in emojis" :key="category">
+                                        <h5>{{ category }}</h5>
+                                        <div class="emojis">
+                                            <span v-for="(emoji, emojiName) in emojiGroup" :key="emojiName"
+                                                @click="insert(emoji)" :title="emojiName">{{ emoji }}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -148,7 +155,7 @@
                 </emoji-picker>
                 <input @change="sendImage(chat,'send')" type="file" name="" id="input-image">
                 <input v-model="inputText" @keyup.enter="writeMessage(chat)" @keyup="showSendIcons()"
-                    class="type-message" type="text" placeholder="Type a message">
+                :class="{'dark-theme':darkTheme}" class="type-message" type="text" placeholder="Type a message">
                 <i @click="writeMessage(chat)" id="send-icons-plane" class="fas fa-paper-plane"></i>
                 <i id="mic-icons-plane" class="fas fa-microphone"></i>
             </div>
@@ -183,7 +190,7 @@
                 <p>Contact Info</p>
             </div>
             <div class="info-contact info-contact-profile">
-                <div id="info-profile-picture">
+                <div  :class="{'dark-theme':darkTheme}" id="info-profile-picture">
                     <img v-if="infoProfileObj.image" :src="'img/avatar/avatar'+infoProfileObj.image+'.jpg'" alt="">
                 </div>
                 <p>{{infoProfileObj.name}}</p>
@@ -195,7 +202,7 @@
                 </div>
                 <div class="info-media-box info-standard-box">
                     <p>All Media</p>
-                    <div v-for="elemento in infoProfileObj.imageSent" class="image-sent-box">
+                    <div  :class="{'dark-theme':darkTheme}" v-for="elemento in infoProfileObj.imageSent" class="image-sent-box">
                         <img :src="elemento" alt="">
                     </div>
                 </div>
