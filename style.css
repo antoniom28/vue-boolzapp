@@ -62,7 +62,7 @@ i {
 }
 
 #root {
-    display: flex;
+    display: none;
     height: 100vh;
     min-height: 400px;
     width: 100vw;
@@ -554,4 +554,13 @@ hr {
 
 #send-icons-plane{
     display: none;
+}
+
+#wait-load{
+    position: fixed;
+    background-image: url(img/wait.png);
+    background-position: center center;
+    height: 100vh;
+    width: 100vw;
+    z-index: 9999;
 }

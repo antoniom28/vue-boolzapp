@@ -189,7 +189,7 @@ var app = new Vue(
                 //LA RISPOSTA AUTOMATICA DEL BOT
                 setTimeout(() => {
                     document.querySelector('.typing').style.display = "block";
-                }, 500);
+                }, 10);
                 setTimeout(() => {
                     let newMessage = {
                         date: this.dateToday.format('DD-MM-YYYY:HH-mm'),
@@ -383,6 +383,8 @@ var app = new Vue(
                 menu[i].style.display = "none";
                 menu[i].classList.remove('visible');
             }
+
+            document.querySelector('.typing').style.display = "none";
         },
         beforeCreate: function () {
             //evento click globale, toglie tutti i pannelli del menu
@@ -399,6 +401,10 @@ var app = new Vue(
             window.addEventListener('load', this.resize);
             window.addEventListener('resize', this.resize);
             this.dateFormat();
+            setTimeout(() => {
+                document.getElementById('wait-load').style.display="none";
+                document.getElementById('root').style.display ="flex";
+            }, 1000);
         }
     }
 );
