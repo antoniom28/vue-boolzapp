@@ -65,6 +65,7 @@
         </div> <!-- CONTACTS -->
 
         <div class="standard-box first-access" v-if="chat === null"></div>
+
         <div v-else id="your-chat" class="standard-box">
             <div @click="showInfoProfile(chat)" id="chat-name" class="standard-header">
                 <div class="profile-contact">
@@ -174,7 +175,7 @@
             </div>
             <div class="info-contact info-contact-profile">
                 <div id="info-profile-picture">
-                    <img :src="'img/avatar/avatar'+infoProfileObj.image+'.jpg'" alt="">
+                    <img v-if="infoProfileObj.image" :src="'img/avatar/avatar'+infoProfileObj.image+'.jpg'" alt="">
                 </div>
                 <p>{{infoProfileObj.name}}</p>
             </div>

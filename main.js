@@ -269,16 +269,18 @@ var app = new Vue(
                         this.slideInfoBox(elemento, mainChatWidth, maxW);
                         this.infoProfileObj.name = chat.name;
                         this.infoProfileObj.image = chat.avatar;
+                        console.log(chat.avatar,this.infoProfileObj.image);
                         this.infoProfileObj.statusText = chat.statusText;
+
                         this.infoProfileObj.imageSent = [];
                         for (let i = 0; i < chat.messages.length; i++) {
-                            let erroreStessaImmagine = false;
+                            let errorSameImage = false;
                             if (chat.messages[i].image != undefined) {
                                 for (let j = 0; j < this.infoProfileObj.imageSent.length; j++) {
                                     if (this.infoProfileObj.imageSent[j] == chat.messages[i].image)
-                                        erroreStessaImmagine = true;
+                                        errorSameImage = true;
                                 }
-                                if (!erroreStessaImmagine) {
+                                if (!errorSameImage) {
                                     this.infoProfileObj.imageSent.push(chat.messages[i].image);
                                     console.log(this.infoProfileObj.imageSent);
                                 }
