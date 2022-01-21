@@ -138,8 +138,7 @@ var app = new Vue(
                 elemento.chatOpen = true;
 
                 setTimeout(() => {
-                    let chatDisplay = document.getElementById('chat');
-                    chatDisplay.scrollTop = chatDisplay.clientHeight;
+                    this.scrollLastMessage();
                 }, 0);
             },
             writeMessage: function (elemento) {
@@ -157,8 +156,7 @@ var app = new Vue(
                     document.getElementById('send-icons-plane').style.display ="none";
                     document.getElementById('mic-icons-plane').style.display ="block";
 
-                    let chatDisplay = document.getElementById('chat');
-                    chatDisplay.scrollTop = chatDisplay.clientHeight;
+                    this.scrollLastMessage();
                 }
             },
             //volevo fare in modo che capisse che file gli
@@ -385,6 +383,10 @@ var app = new Vue(
                 } else
                     return null;
             },
+            scrollLastMessage : function(){
+                let chatDisplay = document.getElementById('chat');
+                chatDisplay.scrollTop = chatDisplay.clientHeight;
+            }
         },
         updated: function () {
             //rimuove il menu-box al cambio chat
