@@ -259,9 +259,7 @@ var app = new Vue(
                     let elemento = document.getElementById('show-info-box');
                     this.slideInfoBox(elemento, mainChatWidth, maxW);
                     this.infoMessage.text = mess.text;
-                    console.log(mess.date);
                     this.infoMessage.date = mess.date.$d + "";
-                    console.log(this.infoMessage.date);
                     this.infoMessage.status = mess.status;
                     this.infoMessage.image = mess.image;
                 }, 10);
@@ -276,7 +274,6 @@ var app = new Vue(
                         this.slideInfoBox(elemento, mainChatWidth, maxW);
                         this.infoProfileObj.name = chat.name;
                         this.infoProfileObj.image = chat.avatar;
-                        console.log(chat.avatar, this.infoProfileObj.image);
                         this.infoProfileObj.statusText = chat.statusText;
 
                         this.infoProfileObj.imageSent = [];
@@ -289,7 +286,6 @@ var app = new Vue(
                                 }
                                 if (!errorSameImage) {
                                     this.infoProfileObj.imageSent.push(chat.messages[i].image);
-                                    console.log(this.infoProfileObj.imageSent);
                                 }
                             }
                         }
@@ -372,12 +368,18 @@ var app = new Vue(
                     document.getElementById('add-new-contact-box').style.display ="flex";
                 else
                     document.getElementById('add-new-contact-box').style.display ="none";
+
+                    //in realtà andava messo - "width del div profilo"
+                    //ma ho messo una width fissa al primo quindi ho lasciato cosi
+                    document.getElementById('add-new-contact-box').style.left ="-300px";
+                    setTimeout(() => {
+                        document.getElementById('add-new-contact-box').style.left ="0";
+                    }, 10);
             },
             //aggiunge un nuovo contatto alla lista amici
             addNewContact : function(){
                 let contact = document.getElementById('add-new-contact').value;
                 if(this.controllaInput(contact)!= null && this.controllaInput(contact)!= ''){
-                    console.log(contact);
                     setTimeout(() => {
                         this.contacts.push({
                             name: contact,
