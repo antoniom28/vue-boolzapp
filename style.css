@@ -2,6 +2,7 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    font-family: sans-serif;
 }
 
 img {
@@ -154,7 +155,7 @@ i {
 }
 
 #notification-alert>* {
-    margin-left: 20px;
+    margin-left: 15px;
 }
 
 .alert-icon {
@@ -416,7 +417,7 @@ hr {
     overflow-wrap: anywhere;
     word-break: break-all;
     border-radius: 10px;
-    padding: 5px;
+    padding: 8px;
     margin: 2px calc(8% + -5px);
     color: black;
     position: relative;
@@ -442,6 +443,7 @@ hr {
     top: 0;
     right: 0;
     margin-right: 5px;
+    border-radius: 20px;
     display: none;
     background-color: inherit;
     opacity: 0.9;
