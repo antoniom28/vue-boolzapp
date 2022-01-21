@@ -279,6 +279,7 @@ var app = new Vue(
             showInfoProfile: function (chat) {
                 //mostra il box delle informazioni del contatto
                 if (!this.infoProfile) {
+                    //calcola la max-width 
                     const maxW = document.documentElement.clientWidth;
                     let mainChatWidth = document.getElementById('your-chat').clientWidth;
                     setTimeout(() => {

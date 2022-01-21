@@ -89,7 +89,7 @@
                     <div class="profile-picture-contact" :class="{'dark-theme':darkTheme}">
                         <img :src="'img/avatar/avatar'+chat.avatar+'.jpg'" alt="">
                     </div>
-                    <div>
+                    <div class="contact-info">
                         <p>{{chat.name}}</p>
                         <span v-if="chat.lastAccess != null" :class="{'add-dots':chat.lastAccess == 'Typing'}" class="typing">{{chat.lastAccess}}</span>
                     </div>
