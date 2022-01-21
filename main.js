@@ -136,6 +136,11 @@ var app = new Vue(
                 for (let i = 0; i < this.contacts.length; i++)
                     this.contacts[i].chatOpen = false;
                 elemento.chatOpen = true;
+
+                setTimeout(() => {
+                    let chatDisplay = document.getElementById('chat');
+                    chatDisplay.scrollTop = chatDisplay.clientHeight;
+                }, 0);
             },
             writeMessage: function (elemento) {
                 //PERMETTE DI SCRIVERE MESSAGGI IN CHAT
@@ -151,6 +156,9 @@ var app = new Vue(
                     this.reply(elemento);
                     document.getElementById('send-icons-plane').style.display ="none";
                     document.getElementById('mic-icons-plane').style.display ="block";
+
+                    let chatDisplay = document.getElementById('chat');
+                    chatDisplay.scrollTop = chatDisplay.clientHeight;
                 }
             },
             //volevo fare in modo che capisse che file gli
