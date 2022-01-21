@@ -162,7 +162,7 @@ i {
     padding: 0 10px;
 }
 
-#settings-box {
+.standard-settings-box{
     display: none;
     background-color: white;
     margin-right: 5px;
@@ -178,7 +178,12 @@ i {
     top: 25px;
 }
 
-#settings-box span{
+#chat-settings{
+    position: relative;
+    padding: 0 10px;
+}
+
+.standard-settings-box span{
 cursor: pointer;
 line-height: 3;
 width: 100%;
@@ -186,7 +191,7 @@ font-weight: normal;
 font-size: 0.8em;
 }
 
-#settings-box span:hover{
+.standard-settings-box span:hover{
     background-color: rgb(236, 236, 236);
 }
 
@@ -339,7 +344,7 @@ hr {
 }
 
 #chat-name .icons {
-    width: 55px;
+    width: 85px;
     margin: 0 30px;
 }
 
@@ -360,7 +365,7 @@ hr {
 .profile-contact {
     display: flex;
     align-items: center;
-    width: 120px;
+    width: 100%;
 }
 
 .profile-contact>* {

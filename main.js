@@ -337,7 +337,7 @@ var app = new Vue(
                     }
                 }
                 this.contacts[deleteTheMessage].messages.splice(index, 1);
-                this.messageMenu(index);
+                //this.messageMenu(index);
             },
             dateFormat: function () {
                 //converte e poi modifica tutte le date dei messaggi
@@ -444,6 +444,22 @@ var app = new Vue(
             openSettings : function (){
                 this.openBox(document.getElementById('settings-box'));
             },
+            openChatSettings : function() {
+                this.openBox(document.getElementById('chat-settings-box'));
+            },
+            deleteChat : function(chat) {
+                chat.messages = [];
+            },
+            deleteContact : function(chat) {
+                setTimeout(() => {
+                    let deleteTheContact;
+                    deleteTheContact = this.contacts.indexOf(chat);
+                this.contacts.splice(deleteTheContact, 1);
+                this.chat = this.contacts[0];
+                if(this.contacts.length == 0)
+                    this.chat = null;
+                }, 10);
+            },
             openBox : function(element) {
                 if (element.style.display == "block") {
                     element.style.display = "none";
@@ -454,7 +470,7 @@ var app = new Vue(
                         element.className += ' visible';
                     }, 0);
                 }
-            }
+            },
         },
         updated: function () {
             //rimuove il menu-box al cambio chat

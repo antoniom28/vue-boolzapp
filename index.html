@@ -30,7 +30,7 @@
                     <i class="fas fa-circle-notch"></i>
                     <i @click="showNewBox(true)" id="add-new-contact-icons" class="fas fa-user-plus"></i>
                     <i @click="openSettings()" id="settings" class="fas fa-ellipsis-v">
-                        <div id="settings-box">
+                        <div id="settings-box" class="standard-settings-box">
                             <span @click="changeFont()" id="change-font">Change font</span>
                             <span @click="changeTheme()" id="change-theme">Change Theme</span>
                         </div>
@@ -84,8 +84,8 @@
         <!-- seconda colonna -->
         <div v-else id="your-chat" class="standard-box">
             <!-- prima riga di nome e info contatto chat aperta -->
-            <div @click="showInfoProfile(chat)" id="chat-name" class="standard-header">
-                <div class="profile-contact">
+            <div id="chat-name" class="standard-header">
+                <div @click="showInfoProfile(chat)" class="profile-contact">
                     <div class="profile-picture-contact" :class="{'dark-theme':darkTheme}">
                         <img :src="'img/avatar/avatar'+chat.avatar+'.jpg'" alt="">
                     </div>
@@ -96,7 +96,12 @@
                 </div>
                 <div class="icons">
                     <i class="fas fa-search"></i>
-                    <i class="fas fa-ellipsis-v"></i>
+                    <i @click="openChatSettings()" id="chat-settings" class="fas fa-ellipsis-v"> <!--@click="openChatSettings()"-->
+                        <div id="chat-settings-box" class="standard-settings-box">
+                            <span @click="deleteChat(chat)" id="change-font">Elimina chat</span>
+                            <span @click="deleteContact(chat)" id="change-theme">Elimina Contatto</span>
+                        </div>
+                    </i>
                 </div>
             </div>
 
