@@ -367,6 +367,32 @@ var app = new Vue(
                 }
 
             },
+            showNewBox : function(show){
+                if(show)
+                    document.getElementById('add-new-contact-box').style.display ="flex";
+                else
+                    document.getElementById('add-new-contact-box').style.display ="none";
+            },
+            //aggiunge un nuovo contatto alla lista amici
+            addNewContact : function(){
+                let contact = document.getElementById('add-new-contact').value;
+                if(this.controllaInput(contact)!= null && this.controllaInput(contact)!= ''){
+                    console.log(contact);
+                    setTimeout(() => {
+                        this.contacts.push({
+                            name: contact,
+                            avatar: `_${this.contacts.length - 3}`,
+                            visible: true,
+                            chatOpen: false,
+                            lastMessage: null,
+                            statusText: "Hey there! I am using WhatsApp.",
+                            messages: []
+                        });
+                        document.getElementById('add-new-contact').value = "";
+                        this.showNewBox(false);
+                    }, 100);
+                }
+            },
             //ci avevo messo altre cose ma poi le ho cancellate,
             resize: function () {
                 this.switchInfo('all');
@@ -381,17 +407,20 @@ var app = new Vue(
                     document.getElementById('mic-icons-plane').style.display = "block";
                 }
             },
-            controllaInput: function () {
+            controllaInput: function (input) {
                 let controlloTesto = null;
-                if (this.inputText != "" && this.inputText != null) {
+                if(input != "" && input != null){
+                    controlloTesto = input.replace(/\s/g, '');
+                    return controlloTesto;
+                } else if (this.inputText != "" && this.inputText != null) {
                     controlloTesto = this.inputText.replace(/\s/g, '');
                     return controlloTesto;
                 } else
                     return null;
             },
             scrollLastMessage: function () {
-                let chatDisplay = document.getElementById('chat');
                 setTimeout(() => {
+                    let chatDisplay = document.getElementById('chat');
                     //giusto per essere sicuri 
                     chatDisplay.scrollTop = chatDisplay.clientHeight + 2000;
                 }, 0);
@@ -405,7 +434,8 @@ var app = new Vue(
                 menu[i].classList.remove('visible');
             }
 
-            document.querySelector('.typing').style.display = "none";
+            if(document.querySelector('.typing'))
+                document.querySelector('.typing').style.display = "none";
         },
         beforeCreate: function () {
             //evento click globale, toglie tutti i pannelli del menu

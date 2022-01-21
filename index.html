@@ -17,13 +17,18 @@
         <div id="contacts">
             <!-- prima colonna -->
             <div id="profile">
+                <div id="add-new-contact-box">
+                    <i @click="showNewBox(false)" class="fas fa-arrow-left"></i>
+                    <input id="add-new-contact" type="text" @keyup.enter="addNewContact()">
+                    <i @click="addNewContact()" class="fas fa-plus"></i>
+                </div>
                 <!-- riga imm profilo e opzioni -->
                 <div id="user-profile-picture" class="profile-picture">
                     <input @change="sendImage(chat,'background')" type="file" name="" id="input-image-profile">
                 </div>
                 <div class="icons">
                     <i class="fas fa-circle-notch"></i>
-                    <i class="fas fa-comment-alt"></i>
+                    <i @click="showNewBox(true)" class="fas fa-user-plus"></i>
                     <i class="fas fa-ellipsis-v"></i>
                 </div>
             </div>

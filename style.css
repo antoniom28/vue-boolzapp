@@ -92,7 +92,7 @@ i {
 }
 
 #profile {
-    /* display: inline-block; */
+    position: relative;
     width: 100%;
     height: 60px;
     background-color: #ededed;
@@ -563,4 +563,27 @@ hr {
     height: 100vh;
     width: 100vw;
     z-index: 9999;
+}
+
+#add-new-contact-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    background-color: rgb(198, 255, 198);
+    z-index: 999;
+    left: 0;
+    display: none;
+}
+
+#add-new-contact-box i{
+    margin: 0 10px;
+    color: grey;
+}
+
+#add-new-contact-box input{
+    height: 40%;
 }
