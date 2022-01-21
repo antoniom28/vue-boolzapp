@@ -383,7 +383,7 @@ var app = new Vue(
                     setTimeout(() => {
                         this.contacts.push({
                             name: contact,
-                            avatar: `_${this.contacts.length - 3}`,
+                            avatar: `_${this.contacts.length + 1}`,
                             visible: true,
                             chatOpen: false,
                             lastMessage: null,
