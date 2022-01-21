@@ -220,7 +220,6 @@ var app = new Vue(
                     this.dateFormat();
                     elemento.lastAccess = "Online";
                     setTimeout(() => {
-                        console.log('ciao');
                         elemento.lastAccess = `Ultimo accesso alle ${this.dateToday.$H}:${this.dateToday.$m}`;
                     }, 2500);
                     this.scrollLastMessage();
