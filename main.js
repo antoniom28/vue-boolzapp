@@ -437,7 +437,8 @@ var app = new Vue(
                 setTimeout(() => {
                     let chatDisplay = document.getElementById('chat');
                     //giusto per essere sicuri 
-                    chatDisplay.scrollTop = chatDisplay.clientHeight + 2000;
+                    if(chatDisplay)
+                        chatDisplay.scrollTop = chatDisplay.clientHeight + 2000;
                 }, 0);
             },
             changeFont : function() {
