@@ -91,7 +91,7 @@
                     </div>
                     <div>
                         <p>{{chat.name}}</p>
-                        <span class="typing">typing</span>
+                        <span v-if="chat.lastAccess != null" :class="{'add-dots':chat.lastAccess == 'Typing'}" class="typing">{{chat.lastAccess}}</span>
                     </div>
                 </div>
                 <div class="icons">

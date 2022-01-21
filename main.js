@@ -6,6 +6,7 @@ let allContacts = [
         chatOpen: false,
         lastMessage: null,
         statusText: "il primo test è sempre il più bello",
+        lastAccess : null,
         messages: [
             {
                 date: '10/01/2020 15:30:55',
@@ -31,6 +32,7 @@ let allContacts = [
         chatOpen: false,
         lastMessage: null,
         statusText: "se potessi fermare il tempo come una fotografia, prenderei questo momento, ci farei un'enorme gigantografia.",
+        lastAccess : null,
         messages: [
             {
                 date: '20/03/2020 16:30:00',
@@ -56,6 +58,7 @@ let allContacts = [
         chatOpen: false,
         lastMessage: null,
         statusText: "non c'è futuro per chi vive nel passato",
+        lastAccess : null,
         messages: [
             {
                 date: '28/03/2020 10:10:40',
@@ -81,6 +84,7 @@ let allContacts = [
         chatOpen: false,
         lastMessage: null,
         statusText: "non chatto con nessuno, figurati se metto uno stato",
+        lastAccess : null,
         messages: [
         ], //test su nuova chat
     },
@@ -204,9 +208,7 @@ var app = new Vue(
             },
             reply: function (elemento) {
                 //LA RISPOSTA AUTOMATICA DEL BOT
-                setTimeout(() => {
-                    document.querySelector('.typing').style.display = "block";
-                }, 10);
+                elemento.lastAccess = "Typing";
                 setTimeout(() => {
                     let random = Math.floor(Math.random()*frasi.length);
                     let newMessage = {
@@ -216,7 +218,11 @@ var app = new Vue(
                     };
                     elemento.messages.push(newMessage);
                     this.dateFormat();
-                    document.querySelector('.typing').style.display = "none";
+                    elemento.lastAccess = "Online";
+                    setTimeout(() => {
+                        console.log('ciao');
+                        elemento.lastAccess = `Ultimo accesso alle ${this.dateToday.$H}:${this.dateToday.$m}`;
+                    }, 2500);
                     this.scrollLastMessage();
                 }, 1500);
             },
@@ -394,6 +400,7 @@ var app = new Vue(
                             chatOpen: false,
                             lastMessage: null,
                             statusText: "Hey there! I am using WhatsApp.",
+                            lastAccess : null,
                             messages: []
                         });
                         document.getElementById('add-new-contact').value = "";
@@ -479,9 +486,7 @@ var app = new Vue(
                 menu[i].style.display = "none";
                 menu[i].classList.remove('visible');
             }
-
-            if(document.querySelector('.typing'))
-                document.querySelector('.typing').style.display = "none";
+            this.dateToday = dayjs();                
         },
         beforeCreate: function () {
             //evento click globale, toglie tutti i pannelli del menu

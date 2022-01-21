@@ -345,7 +345,7 @@ hr {
 
 #chat-name .icons {
     width: 85px;
-    margin: 0 30px;
+    margin: 0 20px;
 }
 
 #your-chat .profile-picture-contact {
@@ -378,10 +378,10 @@ hr {
 
 .profile-contact span {
     color: grey;
-    display: none;
+    white-space: nowrap
 }
 
-.profile-contact span::after {
+.profile-contact span.add-dots::after {
     content: "";
     animation: addDots 1s infinite;
 }
