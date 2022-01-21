@@ -175,7 +175,7 @@
             <div class="filter-background"></div>
             <div class="info-message">
                 <div :class="infoMessage.status" class="mess margin-info">
-                    <img v-if="infoMessage.image != null" class="image-sent" :src="infoMessage.image" alt="">
+                    <img :class="{'dark-theme':darkTheme}" v-if="infoMessage.image != null" class="image-sent" :src="infoMessage.image" alt="">
                     <p v-else>{{infoMessage.text}}</p>
                 </div>
             </div>
