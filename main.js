@@ -120,26 +120,24 @@ var app = new Vue(
                 imageSent: [],
             },
         },
-        methods: 
-        { //AL CLICK APRE LA CHAT CORRISPONDENTE
-            append: function(emoji) {
-                if( this.inputText == null)
+        methods:
+        { 
+            append: function (emoji) {
+                if (this.inputText == null)
                     this.inputText = ""
                 this.inputText += emoji
-                    document.getElementById('send-icons-plane').style.display ="block";
-                    document.getElementById('mic-icons-plane').style.display ="none";
-              },
+                document.getElementById('send-icons-plane').style.display = "block";
+                document.getElementById('mic-icons-plane').style.display = "none";
+            },
+            //AL CLICK APRE LA CHAT CORRISPONDENTE
             openChat: function (elemento) {
                 this.inputText = null,
-                this.switchInfo('all');
+                    this.switchInfo('all');
                 this.chat = elemento;
                 for (let i = 0; i < this.contacts.length; i++)
                     this.contacts[i].chatOpen = false;
                 elemento.chatOpen = true;
-
-                setTimeout(() => {
-                    this.scrollLastMessage();
-                }, 0);
+                this.scrollLastMessage();
             },
             writeMessage: function (elemento) {
                 //PERMETTE DI SCRIVERE MESSAGGI IN CHAT
@@ -153,8 +151,8 @@ var app = new Vue(
                     this.dateFormat();
                     this.inputText = "";
                     this.reply(elemento);
-                    document.getElementById('send-icons-plane').style.display ="none";
-                    document.getElementById('mic-icons-plane').style.display ="block";
+                    document.getElementById('send-icons-plane').style.display = "none";
+                    document.getElementById('mic-icons-plane').style.display = "block";
 
                     this.scrollLastMessage();
                 }
@@ -189,6 +187,7 @@ var app = new Vue(
                         document.getElementById('user-profile-picture').style.backgroundImage = `url(${newMessage.image})`;
                     }
                     input.value = null;
+                    app.scrollLastMessage();
                 }
             },
             reply: function (elemento) {
@@ -205,6 +204,7 @@ var app = new Vue(
                     elemento.messages.push(newMessage);
                     this.dateFormat();
                     document.querySelector('.typing').style.display = "none";
+                    this.scrollLastMessage();
                 }, 1500);
             },
             searchContact: function () {
@@ -239,16 +239,16 @@ var app = new Vue(
                         menu[index].style.top = "-80px";
                     else
                         menu[index].style.top = "20px";
-                    if(menu[index].style.display == "block") {
+                    if (menu[index].style.display == "block") {
                         menu[index].style.display = "none";
                         menu[index].classList.remove('visible');
-                    } else{
+                    } else {
                         menu[index].style.display = "block";
                         setTimeout(() => {
                             menu[index].className += ' visible';
                         }, 0); //aggiungle la classe dopo l'add event a 179js
                     }
-                } else 
+                } else
                     this.switchInfo('all');
             },
             showInfo: function (mess) {
@@ -267,6 +267,7 @@ var app = new Vue(
                 }, 10);
             },
             showInfoProfile: function (chat) {
+                //mostra il box delle informazioni del contatto
                 if (!this.infoProfile) {
                     const maxW = document.documentElement.clientWidth;
                     let mainChatWidth = document.getElementById('your-chat').clientWidth;
@@ -275,7 +276,7 @@ var app = new Vue(
                         this.slideInfoBox(elemento, mainChatWidth, maxW);
                         this.infoProfileObj.name = chat.name;
                         this.infoProfileObj.image = chat.avatar;
-                        console.log(chat.avatar,this.infoProfileObj.image);
+                        console.log(chat.avatar, this.infoProfileObj.image);
                         this.infoProfileObj.statusText = chat.statusText;
 
                         this.infoProfileObj.imageSent = [];
@@ -296,6 +297,8 @@ var app = new Vue(
                 }
                 this.switchInfo('profile');
             },
+            //sotto i 992px le info box copriranno tutta la chat
+            //sopra verranno affiancate
             slideInfoBox: function (elemento, mainChatWidth, maxW) {
                 if (maxW <= 992) {
                     elemento.style.left = `${maxW / 2 - 100}px`;
@@ -306,15 +309,17 @@ var app = new Vue(
                     }, 10);
                 }
             },
+            //funzione per mostrare o no le box info,
+            //e fa in modo di non poterle aprire insieme
             switchInfo: function (infoType) {
                 if (infoType == 'message') {
                     this.infoMess = !this.infoMess;
                     this.infoProfile = false;
                 }
-                else if(infoType == 'profile'){
+                else if (infoType == 'profile') {
                     this.infoProfile = !this.infoProfile;
                     this.infoMess = false;
-                } else if(infoType == 'all'){
+                } else if (infoType == 'all') {
                     this.infoProfile = false;
                     this.infoMess = false;
                 }
@@ -362,30 +367,34 @@ var app = new Vue(
                 }
 
             },
+            //ci avevo messo altre cose ma poi le ho cancellate,
             resize: function () {
                 this.switchInfo('all');
             },
-            showSendIcons : function () {
-                if (this.controllaInput() != "" && this.controllaInput() != null){
-                    document.getElementById('send-icons-plane').style.display ="block";
-                    document.getElementById('mic-icons-plane').style.display ="none";
+            //attiva l'icona dell'invia messaggio allo scrivere su testo
+            showSendIcons: function () {
+                if (this.controllaInput() != "" && this.controllaInput() != null) {
+                    document.getElementById('send-icons-plane').style.display = "block";
+                    document.getElementById('mic-icons-plane').style.display = "none";
                 } else {
-                    document.getElementById('send-icons-plane').style.display ="none";
-                    document.getElementById('mic-icons-plane').style.display ="block";
+                    document.getElementById('send-icons-plane').style.display = "none";
+                    document.getElementById('mic-icons-plane').style.display = "block";
                 }
-
             },
-            controllaInput : function(){
+            controllaInput: function () {
                 let controlloTesto = null;
-                if (this.inputText != "" && this.inputText != null){
+                if (this.inputText != "" && this.inputText != null) {
                     controlloTesto = this.inputText.replace(/\s/g, '');
                     return controlloTesto;
                 } else
                     return null;
             },
-            scrollLastMessage : function(){
+            scrollLastMessage: function () {
                 let chatDisplay = document.getElementById('chat');
-                chatDisplay.scrollTop = chatDisplay.clientHeight;
+                setTimeout(() => {
+                    //giusto per essere sicuri 
+                    chatDisplay.scrollTop = chatDisplay.clientHeight + 2000;
+                }, 0);
             }
         },
         updated: function () {
@@ -414,8 +423,9 @@ var app = new Vue(
             window.addEventListener('resize', this.resize);
             this.dateFormat();
             setTimeout(() => {
-                document.getElementById('wait-load').style.display="none";
-                document.getElementById('root').style.display ="flex";
+                //schermata primo caricamento
+                document.getElementById('wait-load').style.display = "none";
+                document.getElementById('root').style.display = "flex";
             }, 1000);
         }
     }

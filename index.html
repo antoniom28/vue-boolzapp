@@ -11,12 +11,15 @@
 </head>
 
 <body>
+    <!-- Schermata del primo caricamento -->
     <div id="wait-load"></div>
     <div id="root">
         <div id="contacts">
+            <!-- prima colonna -->
             <div id="profile">
+                <!-- riga imm profilo e opzioni -->
                 <div id="user-profile-picture" class="profile-picture">
-                    <input @change ="sendImage(chat,'background')" type="file" name="" id="input-image-profile">
+                    <input @change="sendImage(chat,'background')" type="file" name="" id="input-image-profile">
                 </div>
                 <div class="icons">
                     <i class="fas fa-circle-notch"></i>
@@ -44,6 +47,7 @@
             </div>
 
             <div id="all-chat">
+                <!-- lista di tutti i contatti -->
                 <div v-if="elemento.visible" v-for="(elemento,index) in contacts" @click="openChat(elemento)"
                     class="contacts-box">
                     <div :class="{'focus-contact': elemento.chatOpen}" class="chat-contact">
@@ -64,9 +68,12 @@
             </div>
         </div> <!-- CONTACTS -->
 
+        <!-- fa un display di qualcosa al primo accesso -->
         <div class="standard-box first-access" v-if="chat === null"></div>
 
+        <!-- seconda colonna -->
         <div v-else id="your-chat" class="standard-box">
+            <!-- prima riga di nome e info contatto chat aperta -->
             <div @click="showInfoProfile(chat)" id="chat-name" class="standard-header">
                 <div class="profile-contact">
                     <div class="profile-picture-contact">
@@ -84,6 +91,7 @@
             </div>
 
             <div class="filter-background"></div>
+            <!-- seconda riga, tutta la chat con il contatto -->
             <div id="chat">
                 <div @mouseenter="showMessageMenu(index,true)" @mouseleave="showMessageMenu(index,false)"
                     v-for="(message,index) in chat.messages">
@@ -105,48 +113,43 @@
                     </div>
                 </div>
             </div>
+            <!-- terza riga, l'input di imm, emoji e testo -->
             <div id="chat-input">
                 <emoji-picker @emoji="append" :search="search">
-                    <div
-                      class="emoji-invoker"
-                      slot="emoji-invoker"
-                      slot-scope="{ events: { click: clickEvent } }"
-                      @click.stop="clickEvent"
-                    >
-                      <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
-                      </svg>
+                    <div class="emoji-invoker" slot="emoji-invoker" slot-scope="{ events: { click: clickEvent } }"
+                        @click.stop="clickEvent">
+                        <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" />
+                        </svg>
                     </div>
                     <div slot="emoji-picker" slot-scope="{ emojis, insert, display }">
-                      <div class="emoji-picker">
-                        <div class="emoji-picker__search">
-                          <input type="text" v-model="search">
-                        </div>
-                        <div>
-                          <div v-for="(emojiGroup, category) in emojis" :key="category">
-                            <h5>{{ category }}</h5>
-                            <div class="emojis">
-                              <span
-                                v-for="(emoji, emojiName) in emojiGroup"
-                                :key="emojiName"
-                                @click="insert(emoji)"
-                                :title="emojiName"
-                              >{{ emoji }}</span>
+                        <div class="emoji-picker">
+                            <div class="emoji-picker__search">
+                                <input type="text" v-model="search">
                             </div>
-                          </div>
+                            <div>
+                                <div v-for="(emojiGroup, category) in emojis" :key="category">
+                                    <h5>{{ category }}</h5>
+                                    <div class="emojis">
+                                        <span v-for="(emoji, emojiName) in emojiGroup" :key="emojiName"
+                                            @click="insert(emoji)" :title="emojiName">{{ emoji }}</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
-                  </emoji-picker>
-                <input @change ="sendImage(chat,'send')" type="file" name="" id="input-image">
-                <input v-model="inputText" @keyup.enter="writeMessage(chat)" @keyup="showSendIcons()" class="type-message" type="text"
-                    placeholder="Type a message">
+                </emoji-picker>
+                <input @change="sendImage(chat,'send')" type="file" name="" id="input-image">
+                <input v-model="inputText" @keyup.enter="writeMessage(chat)" @keyup="showSendIcons()"
+                    class="type-message" type="text" placeholder="Type a message">
                 <i @click="writeMessage(chat)" id="send-icons-plane" class="fas fa-paper-plane"></i>
                 <i id="mic-icons-plane" class="fas fa-microphone"></i>
             </div>
         </div>
 
+        <!-- box info messaggio sul click su un mess specifico -->
         <div v-if="infoMess" id="show-info-box" class="standard-box">
             <div class="info-box standard-header">
                 <i @click="switchInfo('message')" class="fas fa-times"></i>
@@ -162,12 +165,13 @@
             <div id="info-time" class="standard-info-box">
                 <div class="info-time-box info-standard-box">
                     <p>Delivered</p>
-                <span>{{infoMessage.date}}</span>
+                    <span>{{infoMessage.date}}</span>
                 </div>
             </div>
-        </div> 
+        </div>
 
-         
+        <!-- box info contatto al click sulla riga del contatto
+            dentro la chat -->
         <div v-if="infoProfile" id="show-profile-info-box" class="standard-box">
             <div class="info-box standard-header">
                 <i @click="switchInfo('profile')" class="fas fa-times"></i>
@@ -193,7 +197,7 @@
             </div>
         </div>
 
-        
+
 
     </div> <!-- ROOT -->
     <!-- Latest compiled and minified JavaScript -->
