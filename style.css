@@ -540,8 +540,8 @@ hr {
 }
 
 #chat-input i {
-    font-size: 1.5em;
     filter: contrast(0.3);
+    margin-right: 20px;
 }
 
 .type-message {
@@ -550,4 +550,8 @@ hr {
     background-color: white;
     display: flex;
     flex: 1 0 auto;
+}
+
+#send-icons-plane{
+    display: none;
 }

@@ -117,7 +117,7 @@
                       </svg>
                     </div>
                     <div slot="emoji-picker" slot-scope="{ emojis, insert, display }">
-                      <div class="emoji-picker" :style="{ top: display.y + 'px', left: display.x + 'px' }">
+                      <div class="emoji-picker">
                         <div class="emoji-picker__search">
                           <input type="text" v-model="search">
                         </div>
@@ -138,9 +138,10 @@
                     </div>
                   </emoji-picker>
                 <input @change ="sendImage(chat,'send')" type="file" name="" id="input-image">
-                <input v-model="inputText" @keyup.enter="writeMessage(chat)" class="type-message" type="text"
+                <input v-model="inputText" @keyup.enter="writeMessage(chat)" @keyup="showSendIcons()" class="type-message" type="text"
                     placeholder="Type a message">
-                <i class="fas fa-microphone"></i>
+                <i @click="writeMessage(chat)" id="send-icons-plane" class="fas fa-paper-plane"></i>
+                <i id="mic-icons-plane" class="fas fa-microphone"></i>
             </div>
         </div>
 

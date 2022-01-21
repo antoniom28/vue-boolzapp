@@ -124,8 +124,10 @@ var app = new Vue(
         { //AL CLICK APRE LA CHAT CORRISPONDENTE
             append: function(emoji) {
                 if( this.inputText == null)
-                this.inputText = ""
+                    this.inputText = ""
                 this.inputText += emoji
+                    document.getElementById('send-icons-plane').style.display ="block";
+                    document.getElementById('mic-icons-plane').style.display ="none";
               },
             openChat: function (elemento) {
                 this.inputText = null,
@@ -137,12 +139,7 @@ var app = new Vue(
             },
             writeMessage: function (elemento) {
                 //PERMETTE DI SCRIVERE MESSAGGI IN CHAT
-                let controlloTesto = null;
-                if (this.inputText != "" && this.inputText != null)
-                    controlloTesto = this.inputText.replace(/\s/g, '');
-                else
-                    return;
-                if (controlloTesto != "" && controlloTesto != null) {
+                if (this.controllaInput() != "" && this.controllaInput() != null) {
                     let newMessage = {
                         date: this.dateToday.format('DD-MM-YYYY:HH-mm'),
                         text: this.inputText,
@@ -152,6 +149,8 @@ var app = new Vue(
                     this.dateFormat();
                     this.inputText = "";
                     this.reply(elemento);
+                    document.getElementById('send-icons-plane').style.display ="none";
+                    document.getElementById('mic-icons-plane').style.display ="block";
                 }
             },
             //volevo fare in modo che capisse che file gli
@@ -234,10 +233,10 @@ var app = new Vue(
                         menu[index].style.top = "-80px";
                     else
                         menu[index].style.top = "20px";
-                    if (menu[index].style.display == "block") {
+                    if(menu[index].style.display == "block") {
                         menu[index].style.display = "none";
                         menu[index].classList.remove('visible');
-                    } else {
+                    } else{
                         menu[index].style.display = "block";
                         setTimeout(() => {
                             menu[index].className += ' visible';
@@ -357,7 +356,25 @@ var app = new Vue(
             },
             resize: function () {
                 this.switchInfo('all');
-            }
+            },
+            showSendIcons : function () {
+                if (this.controllaInput() != "" && this.controllaInput() != null){
+                    document.getElementById('send-icons-plane').style.display ="block";
+                    document.getElementById('mic-icons-plane').style.display ="none";
+                } else {
+                    document.getElementById('send-icons-plane').style.display ="none";
+                    document.getElementById('mic-icons-plane').style.display ="block";
+                }
+
+            },
+            controllaInput : function(){
+                let controlloTesto = null;
+                if (this.inputText != "" && this.inputText != null){
+                    controlloTesto = this.inputText.replace(/\s/g, '');
+                    return controlloTesto;
+                } else
+                    return null;
+            },
         },
         updated: function () {
             //rimuove il menu-box al cambio chat
