@@ -1,7 +1,7 @@
 let allContacts = [
     {
         name: 'Michele',
-        avatar: '_1',
+        avatar: 'img/avatar/avatar_1.jpg',
         visible: true,
         chatOpen: false,
         lastMessage: null,
@@ -27,7 +27,7 @@ let allContacts = [
     },
     {
         name: 'Fabio',
-        avatar: '_2',
+        avatar: 'img/avatar/avatar_2.jpg',
         visible: true,
         chatOpen: false,
         lastMessage: null,
@@ -53,7 +53,7 @@ let allContacts = [
     },
     {
         name: 'Samuele',
-        avatar: '_3',
+        avatar: 'img/avatar/avatar_3.jpg',
         visible: true,
         chatOpen: false,
         lastMessage: null,
@@ -79,7 +79,7 @@ let allContacts = [
     },
     {
         name: 'Luisa',
-        avatar: '_4',
+        avatar: 'img/avatar/avatar_4.jpg',
         visible: true,
         chatOpen: false,
         lastMessage: null,
@@ -154,6 +154,19 @@ var app = new Vue(
                     this.contacts[i].chatOpen = false;
                 elemento.chatOpen = true;
                 this.scrollLastMessage();
+                const maxW = document.documentElement.clientWidth;
+                if(maxW <= 768){
+                    document.getElementById('contacts').style.display ="none";
+                    setTimeout(() => {
+                        document.getElementById('your-chat').style.display ="block";
+                    }, 10);
+                }
+            },
+            closeChat : function(){
+                document.getElementById('contacts').style.display ="block";
+                setTimeout(() => {
+                    document.getElementById('your-chat').style.display ="none";
+                }, 10);
             },
             writeMessage: function (elemento) {
                 //PERMETTE DI SCRIVERE MESSAGGI IN CHAT
@@ -220,6 +233,7 @@ var app = new Vue(
                     this.dateFormat();
                     elemento.lastAccess = "Online";
                     setTimeout(() => {
+                        this.timeAdjust(this.dateToday);
                         elemento.lastAccess = `Ultimo accesso alle ${this.dateToday.$H}:${this.dateToday.$m}`;
                     }, 2500);
                     this.scrollLastMessage();
@@ -358,22 +372,35 @@ var app = new Vue(
                         if (j == message.length - 1) {
                             const date1 = this.dateToday;
                             const date2 = time;
-                            date1.format('DD-MM-YYYY:HH-mm');
-                            date2.format('DD-MM-YYYY:HH-mm');
                             let difference = date1.diff(date2, 'week');
                             if (difference == 0) {
                                 difference = date1.$D - date2.$D;
-                                if (difference == 0)
+                                if (difference == 0){
+                                    this.timeAdjust(date1,date2);
                                     contact[i].lastMessage = date1.$H + ":" + date2.$m;
+                                }
                                 else if (difference == 1)
                                     contact[i].lastMessage = 'Yesterday';
                                 else
                                     contact[i].lastMessage = weekdays[difference];
                             }
                         }
+                        this.timeAdjust(message[j].date);
                     }
                 }
-
+            },
+            timeAdjust : function(time,time2) {
+                if(time2 == undefined){
+                    if(time.$H < 10)
+                        time.$H = '0'+time.$H;
+                    if(time.$m < 10)
+                        time.$m = '0'+time.$m;
+                } else {
+                    if(time.$H < 10)
+                        time.$H = '0'+time.$H;
+                    if(time2.$m < 10)
+                    time2.$m = '0'+time2.$m;
+                }
             },
             showNewBox : function(show){
                 if(show)
@@ -391,22 +418,27 @@ var app = new Vue(
             //aggiunge un nuovo contatto alla lista amici
             addNewContact : function(){
                 let contact = document.getElementById('add-new-contact').value;
-                if(this.controllaInput(contact)!= null && this.controllaInput(contact)!= ''){
-                    setTimeout(() => {
-                        this.contacts.push({
-                            name: contact,
-                            avatar: `_${this.contacts.length + 1}`,
-                            visible: true,
-                            chatOpen: false,
-                            lastMessage: null,
-                            statusText: "Hey there! I am using WhatsApp.",
-                            lastAccess : null,
-                            messages: []
-                        });
-                        document.getElementById('add-new-contact').value = "";
-                        this.showNewBox(false);
-                    }, 100);
-                }
+                let contactUrl = document.getElementById('add-new-contact-url').value;
+                let imgToPut = 'img/avatar/avatar_'+(this.contacts.length + 1)+'.jpg';
+                if(contactUrl.includes('.jpg') || contactUrl.includes('.png'))
+                    imgToPut = contactUrl;
+                if(this.controllaInput(contact)!= null && this.controllaInput(contact)!= '')
+                    if(contactUrl!= null && contactUrl!= '') 
+                        setTimeout(() => {
+                            this.contacts.push({
+                                name: contact,
+                                avatar: imgToPut,
+                                visible: true,
+                                chatOpen: false,
+                                lastMessage: null,
+                                statusText: "Hey there! I am using WhatsApp.",
+                                lastAccess : null,
+                                messages: []
+                            });
+                            document.getElementById('add-new-contact').value = "";
+                            document.getElementById('add-new-contact-url').value = "";
+                            this.showNewBox(false);
+                        }, 100);
             },
             //ci avevo messo altre cose ma poi le ho cancellate,
             resize: function () {
@@ -435,11 +467,9 @@ var app = new Vue(
             },
             scrollLastMessage: function () {
                 setTimeout(() => {
-                    let chatDisplay = document.getElementById('chat');
-                    //giusto per essere sicuri 
-                    if(chatDisplay)
-                        chatDisplay.scrollTop = chatDisplay.clientHeight + 2000;
-                }, 0);
+                    let chatDisplay = document.getElementById('chat');    
+                        chatDisplay.scrollTop = chatDisplay.scrollHeight;
+                }, 100);
             },
             changeFont : function() {
                 document.getElementById('root').style.fontFamily = fontList[fontSelected++];
@@ -463,9 +493,14 @@ var app = new Vue(
                     let deleteTheContact;
                     deleteTheContact = this.contacts.indexOf(chat);
                 this.contacts.splice(deleteTheContact, 1);
-                this.chat = this.contacts[0];
-                if(this.contacts.length == 0)
-                    this.chat = null;
+                const maxW = document.documentElement.clientWidth;
+                if(maxW <= 768)
+                    this.closeChat();
+                else{
+                    this.chat = this.contacts[0];
+                    if(this.contacts.length == 0)
+                        this.chat = null;
+                }
                 }, 10);
             },
             openBox : function(element) {

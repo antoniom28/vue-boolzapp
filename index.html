@@ -19,7 +19,18 @@
             <div id="profile">
                 <div id="add-new-contact-box">
                     <i @click="showNewBox(false)" class="fas fa-arrow-left"></i>
-                    <input id="add-new-contact" type="text" @keyup.enter="addNewContact()">
+                    <div class="add-new-contact-input-box">
+                        <div class="input-name-box">
+                            <span>Name</span>
+                            <input id="add-new-contact" type="text" @keyup.enter="addNewContact()">
+                        </div> 
+                        <div class="input-name-box">
+                            <span>Url</span>
+                            <input id="add-new-contact-url" type="text" @keyup.enter="addNewContact()">
+                        </div>
+                    </div>
+                
+                    
                     <i @click="addNewContact()" class="fas fa-plus"></i>
                 </div>
                 <!-- riga imm profilo e opzioni -->
@@ -63,7 +74,7 @@
                     <div :class="{'focus-contact': elemento.chatOpen}" class="chat-contact">
                         <div id="contact-box">
                             <div class="profile-picture-contact" :class="{'dark-theme':darkTheme}">
-                                <img :src="'img/avatar/avatar'+elemento.avatar+'.jpg'" alt="">
+                                <img :src="elemento.avatar" alt="">
                             </div>
                             <div class="contact-name">
                                 <p>{{elemento.name}}</p>
@@ -85,9 +96,10 @@
         <div v-else id="your-chat" class="standard-box">
             <!-- prima riga di nome e info contatto chat aperta -->
             <div id="chat-name" class="standard-header">
+                <i id="close-chat" @click="closeChat()" class="fas fa-arrow-left"></i>
                 <div @click="showInfoProfile(chat)" class="profile-contact">
                     <div class="profile-picture-contact" :class="{'dark-theme':darkTheme}">
-                        <img :src="'img/avatar/avatar'+chat.avatar+'.jpg'" alt="">
+                        <img :src="chat.avatar" alt="">
                     </div>
                     <div class="contact-info">
                         <p>{{chat.name}}</p>
@@ -158,7 +170,9 @@
                         </div>
                     </div>
                 </emoji-picker>
-                <input @change="sendImage(chat,'send')" type="file" name="" id="input-image">
+                    <i class="fas fa-paperclip">
+                        <input @change="sendImage(chat,'send')" type="file" name="" id="input-image">
+                    </i>
                 <input v-model="inputText" @keyup.enter="writeMessage(chat)" @keyup="showSendIcons()"
                 :class="{'dark-theme':darkTheme}" class="type-message" type="text" placeholder="Type a message">
                 <i @click="writeMessage(chat)" id="send-icons-plane" class="fas fa-paper-plane"></i>
@@ -196,7 +210,7 @@
             </div>
             <div class="info-contact info-contact-profile">
                 <div  :class="{'dark-theme':darkTheme}" id="info-profile-picture">
-                    <img v-if="infoProfileObj.image" :src="'img/avatar/avatar'+infoProfileObj.image+'.jpg'" alt="">
+                    <img v-if="infoProfileObj.image" :src="infoProfileObj.image" alt="">
                 </div>
                 <p>{{infoProfileObj.name}}</p>
             </div>

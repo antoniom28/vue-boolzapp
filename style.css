@@ -16,25 +16,22 @@ img {
     position: static;
     transform: none;
     max-width:300px;
+    border-radius: 15px;
 }
 
 [id*="input-image"]{
-    width: 20px;
+    width: 100%;
     flex: none;
-    position: relative;
-}
-input[id*="input-image"]::after {
-    content: "\f0c6";
-    font-family: fontAwesome;
-    width: 50px;
-    height: 50px;
-    background-color: #ededed;
+    margin: 0;
     position: absolute;
-    top: 0;
-    color: grey;
-    font-size: 1.5em;
+    opacity: 0;
     cursor: pointer;
+    top: 0;
     left: 0;
+}
+
+.fas.fa-paperclip{
+    position: relative;
 }
 
 #input-image-profile{
@@ -42,13 +39,6 @@ input[id*="input-image"]::after {
     height: 100%;
     margin: 0;
     opacity: 0;
-}
-
-input#input-image-profile::after{
-    content: "";
-    opacity: 0;
-    width: 100%;
-    height: 100%;
 }
 
 span {
@@ -67,14 +57,54 @@ i {
     min-height: 400px;
     width: 100vw;
     font-family: sans-serif;
+    overflow-y: hidden;
 }
 
-#contacts {
-    display: inline-block;
-    min-width: 300px;
-    height: 100%;
-    background-color: skyblue;
+/*inizio mobile*/
+
+@media screen and (min-width: 768px) {
+    #contacts {
+        display: inline-block!important;
+        min-width: 300px!important;
+        height: 100%;
+        background-color: skyblue;
+    }
+
+    #your-chat{
+        display: block!important;
+    }
+
+    #close-chat{
+        display: none;
+    }
+
+    .first-access{
+        background-image: url(img/start-chat.png);
+        background-size: cover;
+        background-position: center center;
+        display: block!important;
+    }
 }
+
+#contacts{
+    min-width: 100%;
+    height: 100%;
+}
+
+#your-chat{
+    display: none;
+}
+
+#close-chat{
+    margin: 0 10px;
+    color: grey;
+}
+
+.first-access{
+    display: none;
+}
+
+/*fine mobile*/
 
 .contacts-box{
     position: relative;
@@ -104,17 +134,33 @@ i {
 
 #add-new-contact-box{
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     position: absolute;
     width: 100%;
     height: 100%;
     top: 0;
-    background-color: rgb(198, 255, 198);
+    background-color: #ededed;
     z-index: 999;
     left: 0;
     display: none;
     transition: all 0.2s linear;
+}
+
+.add-new-contact-input-box,.input-name-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.add-new-contact-input-box input{
+    flex: 0 0 auto;
+}
+
+.input-name-box{
+    flex-direction: row;
 }
 
 #add-new-contact-box i{
@@ -124,6 +170,8 @@ i {
 
 #add-new-contact-box input{
     height: 40%;
+    border-radius: 30px;
+    padding: 2px;
 }
 
 [class*="profile-picture"] {
@@ -131,10 +179,21 @@ i {
     width: 50px;
     height: 50px;
     border-radius: 30px;
+    background-color: grey;
     background-image: url(img/profile.png);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
+    cursor: pointer;
+    position: relative;
+}
+
+[id*="input-image"]::before {
+    cursor: pointer;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    content: "";
 }
 
 .icons {
@@ -313,12 +372,6 @@ hr {
     padding: 15px 0;
 }
 
-.first-access{
-    background-image: url(img/start-chat.png);
-    background-size: cover;
-    background-position: center center;
-}
-
 .standard-box{
     border-left: 1px solid #c1c1c1;
     display: flex;
@@ -470,7 +523,7 @@ hr {
     clear: both;
     overflow-wrap: anywhere;
     word-break: break-all;
-    border-radius: 10px;
+    border-radius: 30px;
     padding: 8px;
     margin: 2px calc(8% + -5px);
     color: black;
@@ -483,6 +536,7 @@ hr {
     float: right;
     margin-left: 40px;
     clear: both;
+    border-start-end-radius: 0px;
 }
 
 .mess.received {
@@ -490,6 +544,7 @@ hr {
     float: left;
     margin-right: 40px;
     clear: both;
+    border-start-start-radius: 0px;
 }
 
 #chat .message-button {
