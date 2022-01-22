@@ -469,7 +469,7 @@ var app = new Vue(
                 setTimeout(() => {
                     let chatDisplay = document.getElementById('chat');    
                         chatDisplay.scrollTop = chatDisplay.scrollHeight;
-                }, 100);
+                }, 20);
             },
             changeFont : function() {
                 document.getElementById('root').style.fontFamily = fontList[fontSelected++];
