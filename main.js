@@ -533,10 +533,14 @@ var app = new Vue(
                         menu[i].classList.remove('visible');
                         menu[i].style.display = "none";
                     }
-                if(document.getElementById('settings-box').classList.contains('visible')){
-                    document.getElementById('settings-box').classList.remove('visible');
-                    document.getElementById('settings-box').style.display ="none";
-                }
+                    if(document.getElementById('settings-box').classList.contains('visible')){
+                        document.getElementById('settings-box').classList.remove('visible');
+                        document.getElementById('settings-box').style.display ="none";
+                    }
+                    if(document.getElementById('chat-settings-box').classList.contains('visible')){
+                        document.getElementById('chat-settings-box').classList.remove('visible');
+                        document.getElementById('chat-settings-box').style.display ="none";
+                    }
             });
         },
         created: function () {
