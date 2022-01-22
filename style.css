@@ -65,7 +65,7 @@ i {
 @media screen and (min-width: 768px) {
     #contacts {
         display: inline-block!important;
-        min-width: 300px!important;
+        min-width: calc(260px + 10vw)!important;
         height: 100%;
         background-color: skyblue;
     }
