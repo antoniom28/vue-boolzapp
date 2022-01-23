@@ -484,7 +484,7 @@ var app = new Vue(
                 chat.messages = [];
             },
             deleteContact : function(chat) {
-                this.switchInfo('profile');
+                this.switchInfo('all');
                 setTimeout(() => {
                     let deleteTheContact;
                     deleteTheContact = this.contacts.indexOf(chat);
